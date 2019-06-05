@@ -1,9 +1,6 @@
 window.onload = () => {
-  console.log("Window loaded");
-
   const canvas = document.getElementById("gameCanvas");
   const canvasContext = canvas.getContext("2d");
-  
 
   const board = {
     x: 0,
@@ -29,17 +26,16 @@ window.onload = () => {
     action: null
   };
 
-  
   function drawRect(leftX, topY, width, height, objColor) {
     canvasContext.fillStyle = objColor;
     canvasContext.fillRect(leftX, topY, width, height);
   }
-  
+
   function init() {
     drawRect(board.x, board.y, board.width, board.height, board.color);
     drawRect(apple.x, apple.y, apple.width, apple.height, apple.color);
   }
-  
+
   document.addEventListener("keydown", e => {
     if (event.which === 32) {
       game.on = !game.on;
