@@ -1,21 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Snake Game App</title>
-    <link rel="stylesheet" href="./style.css">
-</head>
-<body>
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <link href="https://fonts.googleapis.com/css?family=Amatic+SC&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
     <div class="container">
-        <div class="panel">
-            <h1>Slyther</h1>
+      <div class="panel">
+        <p id="title">Slyther</h1>
+        <p id="score">Score: <span>0</span></p>
+        <button id="start">Start</button>
+        <div>
+          <ul class="instruction">
+            <li>Use the arrow keys to change the snake's direction</li>
+            <li>Each apple is worth 1 point</li>
+            <li>Snake grows by eating apples</li>
+            <li>Game ends if snake touches wall or self</li>
+          </ul>
         </div>
-        <div class="board">
-            <canvas id="gameCanvas" width="800" height="600"></canvas>
-        </div>
+      </div>
+      <div id="board">
+        <canvas id="gameCanvas" width="800" height="600"></canvas>
+      </div>
     </div>
     <script src="./app.js"></script>
-</body>
+  </body>
 </html>
