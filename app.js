@@ -1,6 +1,7 @@
 window.onload = () => {
-  const canvas = document.getElementById("gameCanvas");
+  const canvas = document.querySelector("#gameCanvas");
   const canvasContext = canvas.getContext("2d");
+  const startButton = document.querySelector("#start");
 
   const board = {
     x: 0,
@@ -36,32 +37,46 @@ window.onload = () => {
     action: null
   };
 
-  function drawRect(leftX, topY, width, height, objColor) {
-    canvasContext.fillStyle = objColor;
-    canvasContext.fillRect(leftX, topY, width, height);
+  function drawRect(objToDraw) {
+    canvasContext.fillStyle = objToDraw.color;
+    canvasContext.fillRect(
+      objToDraw.x,
+      objToDraw.y,
+      objToDraw.width,
+      objToDraw.height
+    );
   }
 
   function init() {
-    drawRect(board.x, board.y, board.width, board.height, board.color);
-    // drawRect(snake.x, snake.y, snake.width, snake.height, snake.color);
-    startText();
+    drawRect(board);
+    showText("Click Start button to begin");
   }
 
-  document.addEventListener("keydown", e => {
-    if (event.which === 32) {
-      game.on = !game.on;
-    }
-    if (game.on) {
-      game.action = setInterval(() => {
-        // draw the game board
-        drawRect(board.x, board.y, board.width, board.height, board.color);
-
-        snakeMove();
-      }, game.speed);
-    } else {
-      clearInterval(game.action);
+  startButton.addEventListener("click", e => {
+    e.preventDefault();
+    if (!game.on) {
+      runGame();
     }
   });
+
+  function runGame() {
+    game.on = !game.on;
+    game.action = setInterval(() => {
+      drawRect(board);
+      snakeMove();
+    }, game.speed);
+  }
+
+  // document.addEventListener("keydown", e => {
+  //   if (event.which === 32) {
+  //     game.on = !game.on;
+  //   }
+  //   if (game.on) {
+  //
+  //   } else {
+  //     clearInterval(game.action);
+  //   }
+  // });
 
   function snakeMove() {
     if (snake.x >= board.width - 10 || snake.x <= 0) {
@@ -74,20 +89,15 @@ window.onload = () => {
 
     snake.y += snake.yVel;
     snake.x += snake.xVel;
-    drawRect(snake.x, snake.y, snake.width, snake.height, snake.color);
+    drawRect(snake);
   }
 
-  function startText() {
+  function showText(message) {
     canvasContext.font = "24px Roboto Mono";
     canvasContext.fillStyle = "#f5f5f6";
     canvasContext.textAlign = "center";
-    canvasContext.fillText(
-      "Click Start button to begin",
-      board.width / 2,
-      board.height / 2
-    );
+    canvasContext.fillText(message, board.width / 2, board.height / 2);
   }
 
   init();
 };
-

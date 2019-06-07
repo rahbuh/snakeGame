@@ -6,7 +6,7 @@ body {
 
 #title {
   font-family: "Amatic SC", cursive;
-  font-size: 120px;
+  font-size: 7.5rem;
   color: #008000;
   margin: 0;
 }
@@ -16,18 +16,24 @@ body {
   grid-column-gap: 20px;
   grid-template-columns: 2fr 3fr;
   justify-items: center;
-  margin: 30px;
+  margin: 2rem;
 }
 
 #score,
 .instruction {
   font-family: "Roboto Mono", monospace;
   color: gray;
-  list-style: none;
 }
 
 #score {
-  font-size: 30px;
+  font-size: 1.8rem;
+}
+
+.instruction {
+	list-style: none;
+	font-size: .8rem;
+	margin: 2rem 0 0;
+	padding: 0;
 }
 
 /* Generated from https://www.bestcssbuttongenerator.com/ */
