@@ -54,19 +54,19 @@ window.onload = () => {
 
   document.addEventListener("keydown", e => {
     e.preventDefault();
-    if (e.key === "ArrowLeft") {
+    if (e.key === "ArrowLeft" && snake.moves.yVel !== 0) {
       snake.moves.xVel = -5;
       snake.moves.yVel = 0;
     }
-    if (e.key === "ArrowUp") {
+    if (e.key === "ArrowUp" && snake.moves.xVel !== 0) {
       snake.moves.xVel = 0;
       snake.moves.yVel = -5;
     }
-    if (e.key === "ArrowRight") {
+    if (e.key === "ArrowRight" && snake.moves.yVel !== 0) {
       snake.moves.xVel = 5;
       snake.moves.yVel = 0;
     }
-    if (e.key === "ArrowDown") {
+    if (e.key === "ArrowDown" && snake.moves.xVel !== 0) {
       snake.moves.xVel = 0;
       snake.moves.yVel = 5;
     }

@@ -32,6 +32,7 @@ body {
 .instruction {
 	list-style: none;
 	font-size: .8rem;
+	line-height: 1.5rem;
 	margin: 2rem 0 0;
 	padding: 0;
 }
