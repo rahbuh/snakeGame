@@ -80,6 +80,7 @@ window.onload = () => {
 
   startButton.addEventListener("click", e => {
     e.preventDefault();
+    // console.log(Math.floor(Math.random() * board.width))
     if (!game.on) {
       setSnakePosition();
       runGame();
