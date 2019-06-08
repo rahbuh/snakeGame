@@ -20,14 +20,14 @@ window.onload = () => {
   };
 
   const snake = {
-    x: 395,
-    y: 295,
+    x: board.width / 2,
+    y: board.width / 2,
     width: 10,
     height: 10,
     color: "#00ff00",
     moves: {
       xVel: 0,
-      yVel: 5
+      yVel: 0
     }
   };
 
@@ -52,8 +52,14 @@ window.onload = () => {
     showText("Click Start button to begin");
   }
 
+  function setSnakePosition() {
+    snake.x = board.width / 2;
+    snake.y = board.height / 2;
+    snake.moves.xVel = 0;
+    snake.moves.yVel = -5;
+  }
+
   document.addEventListener("keydown", e => {
-    e.preventDefault();
     if (e.key === "ArrowLeft" && snake.moves.yVel !== 0) {
       snake.moves.xVel = -5;
       snake.moves.yVel = 0;
@@ -75,6 +81,7 @@ window.onload = () => {
   startButton.addEventListener("click", e => {
     e.preventDefault();
     if (!game.on) {
+      setSnakePosition();
       runGame();
     }
   });
@@ -87,15 +94,18 @@ window.onload = () => {
     }, game.speed);
   }
 
-  // clearInterval(game.action);
+  function endGame() {
+    game.on = !game.on;
+    clearInterval(game.action);
+    showText("Game Over");
+  }
 
   function snakeMove() {
     if (snake.x >= board.width - snake.width || snake.x <= 0) {
-      snake.moves.xVel = -snake.moves.xVel;
+      endGame();
     }
-
     if (snake.y >= board.height - snake.height || snake.y <= 0) {
-      snake.moves.yVel = -snake.moves.yVel;
+      endGame();
     }
 
     snake.y += snake.moves.yVel;
