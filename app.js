@@ -12,11 +12,11 @@ window.onload = () => {
   };
 
   const apple = {
-    x: 395,
-    y: 295,
-    width: 10,
-    height: 10,
-    color: "#ff0000"
+    x: 15,
+    y: 15,
+    radius: 5,
+    color: "#ff0000",
+    eaten: true
   };
 
   const snake = {
@@ -37,14 +37,27 @@ window.onload = () => {
     action: null
   };
 
-  function drawRect(objToDraw) {
-    canvasContext.fillStyle = objToDraw.color;
+  function drawRect(rectObjToDraw) {
+    canvasContext.fillStyle = rectObjToDraw.color;
     canvasContext.fillRect(
-      objToDraw.x,
-      objToDraw.y,
-      objToDraw.width,
-      objToDraw.height
+      rectObjToDraw.x,
+      rectObjToDraw.y,
+      rectObjToDraw.width,
+      rectObjToDraw.height
     );
+  }
+
+  function drawCircle(circObjToDraw) {
+    canvasContext.beginPath();
+    canvasContext.arc(
+      circObjToDraw.x,
+      circObjToDraw.y,
+      circObjToDraw.radius,
+      0,
+      2 * Math.PI
+    );
+    canvasContext.fillStyle = circObjToDraw.color;
+    canvasContext.fill();
   }
 
   function init() {
@@ -57,6 +70,53 @@ window.onload = () => {
     snake.y = board.height / 2;
     snake.moves.xVel = 0;
     snake.moves.yVel = -5;
+  }
+
+  function runGame() {
+    game.on = !game.on;
+    game.action = setInterval(() => {
+      drawRect(board);
+      showApple();
+      snakeMove();
+    }, game.speed);
+  }
+
+  // console.log('x: ', snake.x, ' y: ',snake.y);
+
+  function showApple() {
+    if (apple.eaten) {
+      apple.x = Math.floor(Math.random() * (board.width - 20)) + 10;
+      apple.y = Math.floor(Math.random() * (board.width - 20)) + 10;
+      apple.eaten = !apple.eaten;
+    }
+    drawCircle(apple);
+  }
+
+  function snakeMove() {
+    if (snake.x >= board.width - snake.width || snake.x <= 0) {
+      endGame();
+    }
+    if (snake.y >= board.height - snake.height || snake.y <= 0) {
+      endGame();
+    }
+
+    snake.y += snake.moves.yVel;
+    snake.x += snake.moves.xVel;
+    drawRect(snake);
+  }
+
+  function showText(message) {
+    canvasContext.font = "24px Roboto Mono";
+    canvasContext.fillStyle = "#f5f5f6";
+    canvasContext.textAlign = "center";
+    canvasContext.fillText(message, board.width / 2, board.height / 2);
+  }
+
+  function endGame() {
+    game.on = !game.on;
+    apple.eaten = !apple.eaten;
+    clearInterval(game.action);
+    showText("Game Over");
   }
 
   document.addEventListener("keydown", e => {
@@ -80,46 +140,11 @@ window.onload = () => {
 
   startButton.addEventListener("click", e => {
     e.preventDefault();
-    // console.log(Math.floor(Math.random() * board.width))
     if (!game.on) {
       setSnakePosition();
       runGame();
     }
   });
-
-  function runGame() {
-    game.on = !game.on;
-    game.action = setInterval(() => {
-      drawRect(board);
-      snakeMove();
-    }, game.speed);
-  }
-
-  function endGame() {
-    game.on = !game.on;
-    clearInterval(game.action);
-    showText("Game Over");
-  }
-
-  function snakeMove() {
-    if (snake.x >= board.width - snake.width || snake.x <= 0) {
-      endGame();
-    }
-    if (snake.y >= board.height - snake.height || snake.y <= 0) {
-      endGame();
-    }
-
-    snake.y += snake.moves.yVel;
-    snake.x += snake.moves.xVel;
-    drawRect(snake);
-  }
-
-  function showText(message) {
-    canvasContext.font = "24px Roboto Mono";
-    canvasContext.fillStyle = "#f5f5f6";
-    canvasContext.textAlign = "center";
-    canvasContext.fillText(message, board.width / 2, board.height / 2);
-  }
 
   init();
 };
