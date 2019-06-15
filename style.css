@@ -85,5 +85,4 @@ body {
 #start:focus,
 #start:visited {
 	outline: none;
-	-moz-outline-style: none;
 }

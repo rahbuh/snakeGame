@@ -31,6 +31,20 @@ window.onload = () => {
     }
   };
 
+  // const body = [
+  //   {
+  //     width: 10,
+  //     height: 10,
+  //     color: "#00ff00",
+  //     moves: {
+  //       xLoc: 0,
+  //       yLoc: 0
+  //     }
+  //   }
+  // ];
+
+  // body[0].color;
+
   const game = {
     on: false,
     speed: 50,
@@ -77,11 +91,17 @@ window.onload = () => {
     game.action = setInterval(() => {
       drawRect(board);
       showApple();
-      snakeMove();
+      moveSnake();
     }, game.speed);
   }
 
   // console.log('x: ', snake.x, ' y: ',snake.y);
+  function getDistance(snakeX, snakeY, appleX, appleY ) {
+    let xDistance = appleX - snakeX;
+    let yDistance = appleY - snakeY;
+
+    return Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2));
+  }
 
   function showApple() {
     if (apple.eaten) {
@@ -92,7 +112,7 @@ window.onload = () => {
     drawCircle(apple);
   }
 
-  function snakeMove() {
+  function moveSnake() {
     if (snake.x >= board.width - snake.width || snake.x <= 0) {
       endGame();
     }
@@ -103,6 +123,11 @@ window.onload = () => {
     snake.y += snake.moves.yVel;
     snake.x += snake.moves.xVel;
     drawRect(snake);
+    if(getDistance(snake.x, snake.y, apple.x, apple.y) < apple.radius) {
+      console.log("Collision");
+      // apple.eaten = !apple.eaten;
+    }
+  
   }
 
   function showText(message) {
