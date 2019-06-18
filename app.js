@@ -3,6 +3,15 @@ window.onload = () => {
   const canvasContext = canvas.getContext("2d");
   const startButton = document.querySelector("#start");
 
+//   canvas.width = window.innerWidth;
+//   canvas.height = window.innerHeight;
+
+// context.beginPath();
+// context.moveTo(50, 300);
+// context.lineTo(300, 100);
+// context.strokeStyle = "#000";
+// context.stroke();
+
   const board = {
     x: 0,
     y: 0,
@@ -96,7 +105,7 @@ window.onload = () => {
   }
 
   // console.log('x: ', snake.x, ' y: ',snake.y);
-  function getDistance(snakeX, snakeY, appleX, appleY ) {
+  function getDistance(snakeX, snakeY, appleX, appleY) {
     let xDistance = appleX - snakeX;
     let yDistance = appleY - snakeY;
 
@@ -123,11 +132,10 @@ window.onload = () => {
     snake.y += snake.moves.yVel;
     snake.x += snake.moves.xVel;
     drawRect(snake);
-    if(getDistance(snake.x, snake.y, apple.x, apple.y) < apple.radius) {
+    if (getDistance(snake.x, snake.y, apple.x, apple.y) < apple.radius) {
       console.log("Collision");
       // apple.eaten = !apple.eaten;
     }
-  
   }
 
   function showText(message) {

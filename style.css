@@ -4,6 +4,13 @@ body {
   border-bottom: 1px solid #ccc;
 }
 
+canvas {
+	background-color: #000;
+	border: 1px solid #008000;
+	width: 800px;
+	height: 600px;
+}
+
 #title {
   font-family: "Amatic SC", cursive;
   font-size: 7.5rem;
@@ -86,3 +93,5 @@ body {
 #start:visited {
 	outline: none;
 }
+
+
