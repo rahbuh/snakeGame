@@ -9,12 +9,17 @@ window.onload = () => {
   const xCenter = canvas.width / 2;
   const yCenter = canvas.height / 2;
 
-  const snake = [];
-  const segmentSize = 8;
-  let xDir = 0;
-  let yDir = -segmentSize;
+  const snake = {
+    body: [],
+    segmentSize: 8,
+    color: '#ffffff',
+    xDir: 0,
+    yDir: -8
+  }
 
   const apple = {
+    x: 0,
+    y: 0,
     size: 8,
     color: "#ff0000",
     eaten: true
@@ -40,43 +45,55 @@ window.onload = () => {
     ctx.fillText(message, xCenter, yCenter);
   }
 
+  function drawRect(x, y, width, height, color) {
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.fillRect(x, y, width, height);
+    ctx.closePath();
+  }
+
   function createNewSnake() {
-    snake.length = 0;
+    snake.body.length = 0;
     for (let i = 0; i < 3; i++) {
-      snake.push({ x: xCenter, y: yCenter + segmentSize * i });
+      snake.body.push({ x: xCenter, y: yCenter + snake.segmentSize * i });
     }
   }
 
-  function displayApple() {}
+  function showApple() {
+    apple.x = Math.floor(Math.random() * (canvas.width - 20)) + 10;
+    apple.y = Math.floor(Math.random() * (canvas.height - 20)) + 10;
+    apple.eaten = !apple.eaten;
+    drawRect(apple.x, apple.y, apple.size, apple.size, apple.color);
+  }
+  
+  function drawSnake() {
+    snake.body.forEach(section => {
+      drawRect(section.x, section.y, snake.segmentSize, snake.segmentSize, snake.color);
+    });
+  }
 
   function runGame() {
     game.on = !game.on;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    displayApple();
     drawSnake();
     game.action = setInterval(() => {
+      if (apple.eaten) {
+        showApple();
+        console.log('new apple')
+      }
       moveSnake();
     }, game.speed);
   }
 
   function moveSnake() {
-    let nextX = snake[0].x + xDir;
-    let nextY = snake[0].y + yDir;
+    let nextX = snake.body[0].x + snake.xDir;
+    let nextY = snake.body[0].y + snake.yDir;
 
-    snake.unshift({ x: nextX, y: nextY });
-    let segmentToRemove = snake.pop();
-    
+    snake.body.unshift({ x: nextX, y: nextY });
+    let segmentToRemove = snake.body.pop();
+
     drawSnake();
-    ctx.clearRect(segmentToRemove.x,segmentToRemove.y,segmentSize,segmentSize);
-  }
-
-  function drawSnake() {
-    snake.forEach(section => {
-      ctx.beginPath();
-      ctx.fillStyle = "#FFFFFF";
-      ctx.fillRect(section.x, section.y, segmentSize, segmentSize);
-      ctx.closePath();
-    });
+    ctx.clearRect(segmentToRemove.x,segmentToRemove.y,snake.segmentSize,snake.segmentSize);
   }
 
   function updateScore() {
@@ -85,21 +102,21 @@ window.onload = () => {
   }
 
   document.addEventListener("keydown", e => {
-    if (e.key === "ArrowLeft" && yDir !== 0) {
-      xDir = -segmentSize;
-      yDir = 0;
+    if (e.key === "ArrowLeft" && snake.yDir !== 0) {
+      snake.xDir = -snake.segmentSize;
+      snake.yDir = 0;
     }
-    if (e.key === "ArrowRight" && yDir !== 0) {
-      xDir = segmentSize;
-      yDir = 0;
+    if (e.key === "ArrowRight" && snake.yDir !== 0) {
+      snake.xDir = snake.segmentSize;
+      snake.yDir = 0;
     }
-    if (e.key === "ArrowUp" && xDir !== 0) {
-      xDir = 0;
-      yDir = -segmentSize;
+    if (e.key === "ArrowUp" && snake.xDir !== 0) {
+      snake.xDir = 0;
+      snake.yDir = -snake.segmentSize;
     }
-    if (e.key === "ArrowDown" && xDir !== 0) {
-      xDir = 0;
-      yDir = segmentSize;
+    if (e.key === "ArrowDown" && snake.xDir !== 0) {
+      snake.xDir = 0;
+      snake.yDir = snake.segmentSize;
     }
   });
 
