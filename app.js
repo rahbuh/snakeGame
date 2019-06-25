@@ -2,6 +2,7 @@ window.onload = () => {
   const canvas = document.querySelector("canvas");
   const ctx = canvas.getContext("2d");
   const startButton = document.querySelector("#start");
+  const score = document.querySelector("#score");
 
   canvas.width = 800;
   canvas.height = 600;
@@ -13,8 +14,15 @@ window.onload = () => {
   let xDir = 0;
   let yDir = -segmentSize;
 
+  const apple = {
+    size: 8,
+    color: "#ff0000",
+    eaten: true
+  };
+
   const game = {
     on: false,
+    score: 0,
     speed: 200,
     action: null
   };
@@ -71,24 +79,25 @@ window.onload = () => {
     });
   }
 
+  function updateScore() {
+    game.score += 1;
+    score.childNodes[1].innerText = game.score;
+  }
+
   document.addEventListener("keydown", e => {
     if (e.key === "ArrowLeft" && yDir !== 0) {
-      // console.log("left arrow");
       xDir = -segmentSize;
       yDir = 0;
     }
     if (e.key === "ArrowRight" && yDir !== 0) {
-      // console.log("right arrow");
       xDir = segmentSize;
       yDir = 0;
     }
     if (e.key === "ArrowUp" && xDir !== 0) {
-      // console.log("up arrow");
       xDir = 0;
       yDir = -segmentSize;
     }
     if (e.key === "ArrowDown" && xDir !== 0) {
-      // console.log("down arrow");
       xDir = 0;
       yDir = segmentSize;
     }
