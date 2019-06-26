@@ -14,7 +14,8 @@ window.onload = () => {
     segmentSize: 8,
     color: '#00cc00',
     xDir: 0,
-    yDir: -8
+    yDir: -8,
+    addLink: false
   }
 
   const apple = {
@@ -89,10 +90,13 @@ window.onload = () => {
     let nextY = snake.body[0].y + snake.yDir;
 
     snake.body.unshift({ x: nextX, y: nextY });
-    let segmentToRemove = snake.body.pop();
-
+    if (!snake.addLink) {
+      let segmentToRemove = snake.body.pop();
+      ctx.clearRect(segmentToRemove.x,segmentToRemove.y,snake.segmentSize,snake.segmentSize);
+    } else {
+      snake.addLink = !snake.addLink;
+    }
     drawSnake();
-    ctx.clearRect(segmentToRemove.x,segmentToRemove.y,snake.segmentSize,snake.segmentSize);
     assessSnakeLocation();
   }
 
@@ -110,6 +114,7 @@ window.onload = () => {
       snake.body[0].y + snake.segmentSize > apple.y
     ) {
       apple.eaten = !apple.eaten;
+      snake.addLink = !snake.addLink;
       updateScore();
     }
   }
