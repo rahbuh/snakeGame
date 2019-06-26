@@ -111,6 +111,7 @@ window.onload = () => {
       apple.y = this.randomLocation(canvas.height);
       this.drawRect(apple.x, apple.y, apple.size, apple.size, apple.color);
       apple.eaten = !apple.eaten;
+      console.log(`apple x: ${apple.x}, y: ${apple.y}`);
     },
 
     drawSnake: function() {
@@ -124,7 +125,7 @@ window.onload = () => {
         );
       });
     },
-    
+
     moveSnake: function() {
       let nextX = snake.body[0].x + snake.xDir;
       let nextY = snake.body[0].y + snake.yDir;
