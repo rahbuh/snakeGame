@@ -1,9 +1,7 @@
 window.onload = () => {
   const canvas = document.querySelector("canvas");
   const ctx = canvas.getContext("2d");
-  const startButton = document.querySelector("#start");
-  const score = document.querySelector("#score");
-
+  
   canvas.width = 480;
   canvas.height = 320;
   const xCenter = canvas.width / 2;
@@ -12,11 +10,11 @@ window.onload = () => {
   const snake = {
     body: [],
     segmentSize: 8,
-    color: '#00cc00',
+    color: "#00cc00",
     xDir: 0,
     yDir: -8,
     addLink: false
-  }
+  };
 
   const apple = {
     x: 0,
@@ -33,120 +31,8 @@ window.onload = () => {
     action: null
   };
 
-  function init() {
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    showText("Click Start button to begin");
-    createNewSnake();
-  }
-
-  function resetGame() {
-    game.on = !game.on;
-    game.score = 0;
-    apple.eaten = !apple.eaten;
-    snake.xDir = 0;
-    snake.yDir = -8;
-    createNewSnake();
-  }
-  
-  function showText(message) {
-    ctx.font = "20px Roboto Mono";
-    ctx.fillStyle = "#f5f5f6";
-    ctx.textAlign = "center";
-    ctx.fillText(message, xCenter, yCenter);
-  }
-
-  function createNewSnake() {
-    snake.body.length = 0;
-    for (let i = 0; i < 5; i++) {
-      snake.body.push({ x: xCenter, y: yCenter + snake.segmentSize * i });
-    }
-  }
-  
-  function drawRect(x, y, width, height, color) {
-    ctx.beginPath();
-    ctx.fillStyle = color;
-    ctx.fillRect(x, y, width, height);
-    ctx.closePath();
-  }
-
-  function randomLocation(measure) {
-    return Math.round(Math.floor(Math.random() * (measure - apple.size)) / apple.size) * apple.size;
-  }
-
-  function showApple() {
-    apple.x = randomLocation(canvas.width);
-    apple.y = randomLocation(canvas.height);
-    drawRect(apple.x, apple.y, apple.size, apple.size, apple.color);
-    apple.eaten = !apple.eaten;
-  }
-  
-  function drawSnake() {
-    snake.body.forEach(section => {
-      drawRect(section.x, section.y, snake.segmentSize, snake.segmentSize, snake.color);
-    });
-  }
-
-  function moveSnake() {
-    let nextX = snake.body[0].x + snake.xDir;
-    let nextY = snake.body[0].y + snake.yDir;
-
-    snake.body.unshift({ x: nextX, y: nextY });
-    if (!snake.addLink) {
-      let segmentToRemove = snake.body.pop();
-      ctx.clearRect(segmentToRemove.x,segmentToRemove.y,snake.segmentSize,snake.segmentSize);
-    } else {
-      snake.addLink = !snake.addLink;
-    }
-    drawSnake();
-    assessSnakeLocation();
-  }
-
-  function assessSnakeLocation() {
-    if (snake.body[0].x > canvas.width - snake.segmentSize || snake.body[0].x < 0) {
-      endGame();
-    }
-    if (snake.body[0].y > canvas.height - snake.segmentSize || snake.body[0].y < 0) {
-      endGame();
-    }
-    if (
-      snake.body[0].x < apple.x + apple.size &&
-      snake.body[0].x + snake.segmentSize > apple.x &&
-      snake.body[0].y < apple.y + apple.size &&
-      snake.body[0].y + snake.segmentSize > apple.y
-    ) {
-      apple.eaten = !apple.eaten;
-      snake.addLink = !snake.addLink;
-      updateScore();
-    }
-    for (let i = 1; i < snake.body.length; i++) {
-      if (snake.body[0].x === snake.body[i].x && snake.body[0].y === snake.body[i].y) {
-        endGame();
-      }
-    }
-  }
-
-  function runGame() {
-    game.on = !game.on;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawSnake();
-    game.action = setInterval(() => {
-      if (apple.eaten) {
-        showApple();
-      }
-      moveSnake();
-    }, game.speed);
-  }
-
-  function endGame() {
-    clearInterval(game.action);
-    showText("Game Over");
-    resetGame();
-  }
-
-  function updateScore() {
-    game.score += 1;
-    score.childNodes[1].innerText = game.score;
-  }
+  const startButton = document.querySelector("#start");
+  const score = document.querySelector("#score");
 
   document.addEventListener("keydown", e => {
     if (e.key === "ArrowLeft" && snake.yDir !== 0) {
@@ -171,9 +57,150 @@ window.onload = () => {
     e.preventDefault();
     score.childNodes[1].innerText = game.score;
     if (!game.on) {
-      runGame();
+      app.runGame();
     }
   });
 
-  init();
+  const app = {
+    init: function() {
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      this.showText("Click Start button to begin");
+      this.createNewSnake();
+    },
+
+    resetGame: function() {
+      game.on = !game.on;
+      game.score = 0;
+      apple.eaten = !apple.eaten;
+      snake.xDir = 0;
+      snake.yDir = -8;
+      this.createNewSnake();
+    },
+
+    showText: function(message) {
+      ctx.font = "20px Roboto Mono";
+      ctx.fillStyle = "#f5f5f6";
+      ctx.textAlign = "center";
+      ctx.fillText(message, xCenter, yCenter);
+    },
+
+    createNewSnake: function() {
+      snake.body.length = 0;
+      for (let i = 0; i < 5; i++) {
+        snake.body.push({ x: xCenter, y: yCenter + snake.segmentSize * i });
+      }
+    },
+
+    drawRect: function(x, y, width, height, color) {
+      ctx.beginPath();
+      ctx.fillStyle = color;
+      ctx.fillRect(x, y, width, height);
+      ctx.closePath();
+    },
+
+    randomLocation: function(measure) {
+      return (
+        Math.round(
+          Math.floor(Math.random() * (measure - apple.size)) / apple.size
+        ) * apple.size
+      );
+    },
+
+    showApple: function() {
+      apple.x = this.randomLocation(canvas.width);
+      apple.y = this.randomLocation(canvas.height);
+      this.drawRect(apple.x, apple.y, apple.size, apple.size, apple.color);
+      apple.eaten = !apple.eaten;
+    },
+
+    drawSnake: function() {
+      snake.body.forEach(section => {
+        this.drawRect(
+          section.x,
+          section.y,
+          snake.segmentSize,
+          snake.segmentSize,
+          snake.color
+        );
+      });
+    },
+    
+    moveSnake: function() {
+      let nextX = snake.body[0].x + snake.xDir;
+      let nextY = snake.body[0].y + snake.yDir;
+
+      snake.body.unshift({ x: nextX, y: nextY });
+      if (!snake.addLink) {
+        let segmentToRemove = snake.body.pop();
+        ctx.clearRect(
+          segmentToRemove.x,
+          segmentToRemove.y,
+          snake.segmentSize,
+          snake.segmentSize
+        );
+      } else {
+        snake.addLink = !snake.addLink;
+      }
+      this.drawSnake();
+      this.assessSnakeLocation();
+    },
+
+    assessSnakeLocation: function() {
+      if (
+        snake.body[0].x > canvas.width - snake.segmentSize ||
+        snake.body[0].x < 0
+      ) {
+        this.endGame();
+      }
+      if (
+        snake.body[0].y > canvas.height - snake.segmentSize ||
+        snake.body[0].y < 0
+      ) {
+        this.endGame();
+      }
+      if (
+        snake.body[0].x < apple.x + apple.size &&
+        snake.body[0].x + snake.segmentSize > apple.x &&
+        snake.body[0].y < apple.y + apple.size &&
+        snake.body[0].y + snake.segmentSize > apple.y
+      ) {
+        apple.eaten = !apple.eaten;
+        snake.addLink = !snake.addLink;
+        this.updateScore();
+      }
+      for (let i = 1; i < snake.body.length; i++) {
+        if (
+          snake.body[0].x === snake.body[i].x &&
+          snake.body[0].y === snake.body[i].y
+        ) {
+          this.endGame();
+        }
+      }
+    },
+
+    runGame: function() {
+      game.on = !game.on;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      this.drawSnake();
+      game.action = setInterval(() => {
+        if (apple.eaten) {
+          this.showApple();
+        }
+        this.moveSnake();
+      }, game.speed);
+    },
+
+    endGame: function() {
+      clearInterval(game.action);
+      this.showText("Game Over");
+      this.resetGame();
+    },
+
+    updateScore: function() {
+      game.score += 1;
+      score.childNodes[1].innerText = game.score;
+    }
+  };
+
+  app.init();
 };
