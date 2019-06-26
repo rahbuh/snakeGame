@@ -4,8 +4,8 @@ window.onload = () => {
   const startButton = document.querySelector("#start");
   const score = document.querySelector("#score");
 
-  canvas.width = 800;
-  canvas.height = 640;
+  canvas.width = 480;
+  canvas.height = 320;
   const xCenter = canvas.width / 2;
   const yCenter = canvas.height / 2;
 
@@ -29,7 +29,7 @@ window.onload = () => {
   const game = {
     on: false,
     score: 0,
-    speed: 250,
+    speed: 130,
     action: null
   };
 
@@ -41,6 +41,7 @@ window.onload = () => {
 
   function resetGame() {
     game.on = !game.on;
+    game.score = 0;
     apple.eaten = !apple.eaten;
     snake.xDir = 0;
     snake.yDir = -8;
@@ -48,7 +49,7 @@ window.onload = () => {
   }
   
   function showText(message) {
-    ctx.font = "24px Roboto Mono";
+    ctx.font = "20px Roboto Mono";
     ctx.fillStyle = "#f5f5f6";
     ctx.textAlign = "center";
     ctx.fillText(message, xCenter, yCenter);
@@ -56,7 +57,7 @@ window.onload = () => {
 
   function createNewSnake() {
     snake.body.length = 0;
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 5; i++) {
       snake.body.push({ x: xCenter, y: yCenter + snake.segmentSize * i });
     }
   }
@@ -69,7 +70,7 @@ window.onload = () => {
   }
 
   function randomLocation(measure) {
-    return Math.round(Math.floor(Math.random() * (measure)) / apple.size) * apple.size;
+    return Math.round(Math.floor(Math.random() * (measure - apple.size)) / apple.size) * apple.size;
   }
 
   function showApple() {
@@ -117,6 +118,11 @@ window.onload = () => {
       snake.addLink = !snake.addLink;
       updateScore();
     }
+    for (let i = 1; i < snake.body.length; i++) {
+      if (snake.body[0].x === snake.body[i].x && snake.body[0].y === snake.body[i].y) {
+        endGame();
+      }
+    }
   }
 
   function runGame() {
@@ -163,6 +169,7 @@ window.onload = () => {
 
   startButton.addEventListener("click", e => {
     e.preventDefault();
+    score.childNodes[1].innerText = game.score;
     if (!game.on) {
       runGame();
     }
