@@ -5,7 +5,7 @@ window.onload = () => {
   const score = document.querySelector("#score");
 
   canvas.width = 800;
-  canvas.height = 600;
+  canvas.height = 640;
   const xCenter = canvas.width / 2;
   const yCenter = canvas.height / 2;
 
@@ -28,7 +28,7 @@ window.onload = () => {
   const game = {
     on: false,
     score: 0,
-    speed: 200,
+    speed: 250,
     action: null
   };
 
@@ -67,11 +67,15 @@ window.onload = () => {
     ctx.closePath();
   }
 
+  function randomLocation(measure) {
+    return Math.round(Math.floor(Math.random() * (measure)) / apple.size) * apple.size;
+  }
+
   function showApple() {
-    apple.x = Math.floor(Math.random() * (canvas.width - 20)) + 10;
-    apple.y = Math.floor(Math.random() * (canvas.height - 20)) + 10;
-    apple.eaten = !apple.eaten;
+    apple.x = randomLocation(canvas.width);
+    apple.y = randomLocation(canvas.height);
     drawRect(apple.x, apple.y, apple.size, apple.size, apple.color);
+    apple.eaten = !apple.eaten;
   }
   
   function drawSnake() {
@@ -98,6 +102,15 @@ window.onload = () => {
     }
     if (snake.body[0].y > canvas.height - snake.segmentSize || snake.body[0].y < 0) {
       endGame();
+    }
+    if (
+      snake.body[0].x < apple.x + apple.size &&
+      snake.body[0].x + snake.segmentSize > apple.x &&
+      snake.body[0].y < apple.y + apple.size &&
+      snake.body[0].y + snake.segmentSize > apple.y
+    ) {
+      apple.eaten = !apple.eaten;
+      updateScore();
     }
   }
 
