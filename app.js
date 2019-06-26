@@ -12,7 +12,7 @@ window.onload = () => {
   const snake = {
     body: [],
     segmentSize: 8,
-    color: '#ffffff',
+    color: '#00cc00',
     xDir: 0,
     yDir: -8
   }
@@ -38,6 +38,14 @@ window.onload = () => {
     createNewSnake();
   }
 
+  function resetGame() {
+    game.on = !game.on;
+    apple.eaten = !apple.eaten;
+    snake.xDir = 0;
+    snake.yDir = -8;
+    createNewSnake();
+  }
+  
   function showText(message) {
     ctx.font = "24px Roboto Mono";
     ctx.fillStyle = "#f5f5f6";
@@ -45,18 +53,18 @@ window.onload = () => {
     ctx.fillText(message, xCenter, yCenter);
   }
 
-  function drawRect(x, y, width, height, color) {
-    ctx.beginPath();
-    ctx.fillStyle = color;
-    ctx.fillRect(x, y, width, height);
-    ctx.closePath();
-  }
-
   function createNewSnake() {
     snake.body.length = 0;
     for (let i = 0; i < 3; i++) {
       snake.body.push({ x: xCenter, y: yCenter + snake.segmentSize * i });
     }
+  }
+  
+  function drawRect(x, y, width, height, color) {
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.fillRect(x, y, width, height);
+    ctx.closePath();
   }
 
   function showApple() {
@@ -72,19 +80,6 @@ window.onload = () => {
     });
   }
 
-  function runGame() {
-    game.on = !game.on;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawSnake();
-    game.action = setInterval(() => {
-      if (apple.eaten) {
-        showApple();
-        console.log('new apple')
-      }
-      moveSnake();
-    }, game.speed);
-  }
-
   function moveSnake() {
     let nextX = snake.body[0].x + snake.xDir;
     let nextY = snake.body[0].y + snake.yDir;
@@ -94,6 +89,34 @@ window.onload = () => {
 
     drawSnake();
     ctx.clearRect(segmentToRemove.x,segmentToRemove.y,snake.segmentSize,snake.segmentSize);
+    assessSnakeLocation();
+  }
+
+  function assessSnakeLocation() {
+    if (snake.body[0].x > canvas.width - snake.segmentSize || snake.body[0].x < 0) {
+      endGame();
+    }
+    if (snake.body[0].y > canvas.height - snake.segmentSize || snake.body[0].y < 0) {
+      endGame();
+    }
+  }
+
+  function runGame() {
+    game.on = !game.on;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawSnake();
+    game.action = setInterval(() => {
+      if (apple.eaten) {
+        showApple();
+      }
+      moveSnake();
+    }, game.speed);
+  }
+
+  function endGame() {
+    clearInterval(game.action);
+    showText("Game Over");
+    resetGame();
   }
 
   function updateScore() {
