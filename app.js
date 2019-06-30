@@ -143,22 +143,23 @@ window.onload = () => {
         snake.addLink = !snake.addLink;
       }
       this.drawSnake();
+      this.detectEdgeCollision();
       this.assessSnakeLocation();
     },
 
+    detectEdgeCollision: function() {
+      const isTouchingRightOrLeftEdge = snake.body[0].x > canvas.width - snake.segmentSize ||
+      snake.body[0].x < 0;
+
+      const isTouchingTopOrBottomEdge = snake.body[0].y > canvas.height - snake.segmentSize ||
+      snake.body[0].y < 0;
+
+      if (isTouchingRightOrLeftEdge || isTouchingTopOrBottomEdge) {
+        this.endGame();
+      }
+    },
+
     assessSnakeLocation: function() {
-      if (
-        snake.body[0].x > canvas.width - snake.segmentSize ||
-        snake.body[0].x < 0
-      ) {
-        this.endGame();
-      }
-      if (
-        snake.body[0].y > canvas.height - snake.segmentSize ||
-        snake.body[0].y < 0
-      ) {
-        this.endGame();
-      }
       if (
         snake.body[0].x < apple.x + apple.size &&
         snake.body[0].x + snake.segmentSize > apple.x &&
