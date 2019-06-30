@@ -1,19 +1,25 @@
 window.onload = () => {
   const canvas = document.querySelector("canvas");
   const ctx = canvas.getContext("2d");
-  
+
   canvas.width = 480;
   canvas.height = 320;
   const xCenter = canvas.width / 2;
   const yCenter = canvas.height / 2;
 
+  const DIRECTION = {
+    RIGHT: "RIGHT",
+    LEFT: "LEFT",
+    UP: "UP",
+    DOWN: "DOWN"
+  };
+
   const snake = {
     body: [],
     segmentSize: 8,
     color: "#00cc00",
-    xDir: 0,
-    yDir: -8,
-    addLink: false
+    direction: 'UP',
+    addSegment: false
   };
 
   const apple = {
@@ -35,21 +41,17 @@ window.onload = () => {
   const score = document.querySelector("#score");
 
   document.addEventListener("keydown", e => {
-    if (e.key === "ArrowLeft" && snake.yDir !== 0) {
-      snake.xDir = -snake.segmentSize;
-      snake.yDir = 0;
+    if (e.key === "ArrowLeft" && snake.direction !== DIRECTION.RIGHT) {
+      snake.direction = DIRECTION.LEFT;
     }
-    if (e.key === "ArrowRight" && snake.yDir !== 0) {
-      snake.xDir = snake.segmentSize;
-      snake.yDir = 0;
+    if (e.key === "ArrowRight" && snake.direction !== DIRECTION.LEFT) {
+      snake.direction = DIRECTION.RIGHT;
     }
-    if (e.key === "ArrowUp" && snake.xDir !== 0) {
-      snake.xDir = 0;
-      snake.yDir = -snake.segmentSize;
+    if (e.key === "ArrowUp" && snake.direction !== DIRECTION.DOWN) {
+      snake.direction = DIRECTION.UP;
     }
-    if (e.key === "ArrowDown" && snake.xDir !== 0) {
-      snake.xDir = 0;
-      snake.yDir = snake.segmentSize;
+    if (e.key === "ArrowDown" && snake.direction !== DIRECTION.UP) {
+      snake.direction = DIRECTION.DOWN;
     }
   });
 
@@ -72,8 +74,7 @@ window.onload = () => {
       game.on = !game.on;
       game.score = 0;
       apple.eaten = !apple.eaten;
-      snake.xDir = 0;
-      snake.yDir = -8;
+      snake.direction = DIRECTION.UP;
       this.createNewSnake();
     },
 
@@ -111,7 +112,6 @@ window.onload = () => {
       apple.y = this.randomLocation(canvas.height);
       this.drawRect(apple.x, apple.y, apple.size, apple.size, apple.color);
       apple.eaten = !apple.eaten;
-      console.log(`apple x: ${apple.x}, y: ${apple.y}`);
     },
 
     drawSnake: function() {
@@ -127,11 +127,28 @@ window.onload = () => {
     },
 
     moveSnake: function() {
-      let nextX = snake.body[0].x + snake.xDir;
-      let nextY = snake.body[0].y + snake.yDir;
+      let nextX = snake.body[0].x;
+      let nextY = snake.body[0].y;
+
+      switch (snake.direction) {
+        case "LEFT":
+          nextX -= snake.segmentSize;
+          break;
+        case "RIGHT":
+          nextX += snake.segmentSize;
+          break;
+        case "UP":
+          nextY -= snake.segmentSize;
+          break;
+        case "DOWN":
+          nextY += snake.segmentSize;
+          break;
+        default:
+          throw new Error("invalid snake direction");
+      }
 
       snake.body.unshift({ x: nextX, y: nextY });
-      if (!snake.addLink) {
+      if (!snake.addSegment) {
         let segmentToRemove = snake.body.pop();
         ctx.clearRect(
           segmentToRemove.x,
@@ -140,36 +157,43 @@ window.onload = () => {
           snake.segmentSize
         );
       } else {
-        snake.addLink = !snake.addLink;
+        snake.addSegment = !snake.addSegment;
       }
       this.drawSnake();
+      this.detectAppleEaten();
       this.detectEdgeCollision();
-      this.assessSnakeLocation();
+      this.detectSnakeCollisionWithSelf();
     },
 
     detectEdgeCollision: function() {
-      const isTouchingRightOrLeftEdge = snake.body[0].x > canvas.width - snake.segmentSize ||
-      snake.body[0].x < 0;
+      const isTouchingRightOrLeftEdge =
+        snake.body[0].x > canvas.width - snake.segmentSize ||
+        snake.body[0].x < 0;
 
-      const isTouchingTopOrBottomEdge = snake.body[0].y > canvas.height - snake.segmentSize ||
-      snake.body[0].y < 0;
+      const isTouchingTopOrBottomEdge =
+        snake.body[0].y > canvas.height - snake.segmentSize ||
+        snake.body[0].y < 0;
 
       if (isTouchingRightOrLeftEdge || isTouchingTopOrBottomEdge) {
         this.endGame();
       }
     },
 
-    assessSnakeLocation: function() {
-      if (
+    detectAppleEaten: function() {
+      const isAppleEaten =
         snake.body[0].x < apple.x + apple.size &&
         snake.body[0].x + snake.segmentSize > apple.x &&
         snake.body[0].y < apple.y + apple.size &&
-        snake.body[0].y + snake.segmentSize > apple.y
-      ) {
+        snake.body[0].y + snake.segmentSize > apple.y;
+
+      if (isAppleEaten) {
         apple.eaten = !apple.eaten;
-        snake.addLink = !snake.addLink;
+        snake.addSegment = !snake.addSegment;
         this.updateScore();
       }
+    },
+
+    detectSnakeCollisionWithSelf: function() {
       for (let i = 1; i < snake.body.length; i++) {
         if (
           snake.body[0].x === snake.body[i].x &&
