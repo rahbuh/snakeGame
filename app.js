@@ -18,7 +18,7 @@ window.onload = () => {
     body: [],
     segmentSize: 8,
     color: "#00cc00",
-    direction: 'UP',
+    direction: "UP",
     addSegment: false
   };
 
@@ -52,6 +52,9 @@ window.onload = () => {
     }
     if (e.key === "ArrowDown" && snake.direction !== DIRECTION.UP) {
       snake.direction = DIRECTION.DOWN;
+    }
+    if (e.key === " ") {
+      app.redrawApple();
     }
   });
 
@@ -107,29 +110,34 @@ window.onload = () => {
       );
     },
 
-    createNewAppleCoordinates: function () {
+    createNewAppleCoordinates: function() {
       apple.x = this.randomLocation(canvas.width);
       apple.y = this.randomLocation(canvas.height);
     },
 
-    appleRenderedUnderSnake: function () {
-      snake.body.forEach((section) => {
+    appleRenderedUnderSnake: function() {
+      snake.body.forEach(section => {
         if (apple.x === section.x && apple.y === section.y) {
           return true;
         }
-      })
+      });
       return false;
     },
 
     showApple: function() {
       this.createNewAppleCoordinates();
-      while(this.appleRenderedUnderSnake()) {
+      while (this.appleRenderedUnderSnake()) {
         console.log("Apple rendered under snake");
         this.createNewAppleCoordinates();
       }
       console.log(`new apple - x: ${apple.x}, y: ${apple.y}`);
       this.drawRect(apple.x, apple.y, apple.size, apple.size, apple.color);
       apple.eaten = !apple.eaten;
+    },
+
+    redrawApple: function() {
+      console.log("redraw");
+      this.drawRect(apple.x, apple.y, apple.size, apple.size, apple.color);
     },
 
     drawSnake: function() {
