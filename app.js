@@ -113,7 +113,6 @@ window.onload = () => {
     },
 
     appleRenderedUnderSnake: function () {
-      console.log('Checking apple location')
       snake.body.forEach((section) => {
         if (apple.x === section.x && apple.y === section.y) {
           return true;
@@ -128,7 +127,7 @@ window.onload = () => {
         console.log("Apple rendered under snake");
         this.createNewAppleCoordinates();
       }
-      console.log(`apple - x: ${apple.x}`, y: ${apple.y});
+      console.log(`new apple - x: ${apple.x}, y: ${apple.y}`);
       this.drawRect(apple.x, apple.y, apple.size, apple.size, apple.color);
       apple.eaten = !apple.eaten;
     },
