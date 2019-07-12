@@ -14,5 +14,5 @@ Have fun!
 
 ## Authors
 
-**Rob Kramer** - [Rob Kramer](https://github.com/rahbuh)
+[Rob Kramer](https://github.com/rahbuh)
 
