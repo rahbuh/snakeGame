@@ -1,17 +1,18 @@
 body {
   margin: 0;
   padding: 0;
-  border-bottom: 1px solid #ccc;
-  min-width: 580px;
+  box-sizing: border-box;
+  min-width: 520px;
 }
 
 canvas {
-  background-color: #000;
-  border: 1px solid #008000;
+  background-color: #9ab286;
+  border: 1px solid #000;
+  font-family: "VT323", monospace;
 }
 
 #title {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-size: 4rem;
   color: #008000;
   text-align: center;
@@ -19,31 +20,40 @@ canvas {
 }
 
 .container {
-  display: flex;
-  flex-wrap: wrap-reverse;
-  justify-content: center;
-  margin: 1rem 2rem;
+  width: 510px;
+  margin: 20px auto 0;
 }
 
-.panel {
-	padding: 0 2rem;
+#board {
+  background-color: #9ab286;
+  border-radius: 4px;
+  padding: 14px;
+}
+
+#stats {
+  display: flex;
+  justify-content: space-between;
 }
 
 #score,
-.instruction {
-  font-family: "Roboto Mono", monospace;
-  color: gray;
+#level {
+  font-family: "VT323", monospace;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  color: #000;
+  margin: 0;
 }
 
-#score {
-  font-size: 1.8rem;
-  margin: .5rem 0;
+.panel {
+  padding: 1rem 0;
 }
 
 .instruction {
   list-style: none;
+  font-family: "Roboto Mono", monospace;
   font-size: 0.8rem;
   line-height: 1.5rem;
+  color: gray;
   margin-top: 1rem;
   padding: 0;
 }

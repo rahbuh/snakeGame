@@ -5,9 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Snake Game App</title>
-    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
+      rel="stylesheet"
+    />
     <link
       href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=VT323&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./style.css" />
@@ -15,8 +22,14 @@
   <body>
     <div><p id="title">Snake Game</p></div>
     <div class="container">
+      <div id="board">
+        <canvas>Sorry, your browser does not support HTML5 Canvas.</canvas>
+        <div id="stats">
+          <p id="score">score: <span>0</span></p>
+          <p id="level">level: <span>slow</span></p>
+        </div>
+      </div>
       <div class="panel">
-        <p id="score">Score: <span>0</span></p>
         <button id="start">Start</button>
         <div>
           <ul class="instruction">
@@ -26,9 +39,6 @@
             <li>Game ends if snake touches the outer wall or itself</li>
           </ul>
         </div>
-      </div>
-      <div id="board">
-        <canvas>Sorry, your browser does not support HTML5 Canvas.</canvas>
       </div>
     </div>
     <script src="./app.js"></script>

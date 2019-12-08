@@ -1,11 +1,14 @@
-window.onload = () => {
+(function() {
   const canvas = document.querySelector("canvas");
   const ctx = canvas.getContext("2d");
 
   canvas.width = 480;
   canvas.height = 320;
+
   const xCenter = canvas.width / 2;
   const yCenter = canvas.height / 2;
+  const startButton = document.querySelector("#start");
+  const score = document.querySelector("#score");
 
   const DIRECTION = {
     RIGHT: "RIGHT",
@@ -17,7 +20,7 @@ window.onload = () => {
   const snake = {
     body: [],
     segmentSize: 8,
-    color: "#00cc00",
+    color: "#000",
     direction: "UP",
     addSegment: false
   };
@@ -26,7 +29,7 @@ window.onload = () => {
     x: 0,
     y: 0,
     size: 8,
-    color: "#ff0000",
+    color: "#000",
     eaten: true
   };
 
@@ -36,9 +39,6 @@ window.onload = () => {
     speed: 130,
     action: null
   };
-
-  const startButton = document.querySelector("#start");
-  const score = document.querySelector("#score");
 
   document.addEventListener("keydown", e => {
     if (e.key === "ArrowLeft" && snake.direction !== DIRECTION.RIGHT) {
@@ -65,7 +65,6 @@ window.onload = () => {
 
   const app = {
     init: function() {
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
       this.showText("Click Start button to begin");
       this.createNewSnake();
     },
@@ -79,12 +78,12 @@ window.onload = () => {
     },
 
     showText: function(message) {
-      ctx.font = "20px Roboto Mono";
-      ctx.fillStyle = "#f5f5f6";
+      ctx.font = "20px monospace";
+      ctx.fillStyle = "#000";
       ctx.textAlign = "center";
       ctx.fillText(message, xCenter, yCenter);
     },
-
+    
     createNewSnake: function() {
       snake.body.length = 0;
       for (let i = 0; i < 5; i++) {
@@ -234,4 +233,9 @@ window.onload = () => {
   };
 
   app.init();
-};
+})();
+
+// window.onload = () => {
+
+//   app.init();
+// };
