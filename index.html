@@ -20,7 +20,6 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <div><p id="title">Snake Game</p></div>
     <div class="container">
       <div id="board">
         <canvas>Sorry, your browser does not support HTML5 Canvas.</canvas>
@@ -29,8 +28,14 @@
           <p id="level">level: <span>slow</span></p>
         </div>
       </div>
+      <div class="controls-wrapper">
+        <button id="btn-up" class="control">&#8593;</button>
+        <button id="btn-left" class="control">&#8592;</button>
+        <button id="btn-right" class="control">&#8594;</button>
+        <button id="btn-down" class="control">&#8595;</button>
+      </div>
       <div class="panel">
-        <button id="start">Start</button>
+        <p id="title">Snake Game</p>
         <div>
           <ul class="instruction">
             <li>Use the arrow keys to change the snake's direction</li>

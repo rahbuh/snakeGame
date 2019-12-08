@@ -1,4 +1,4 @@
-(function() {
+window.onload = function() {
   const canvas = document.querySelector("canvas");
   const ctx = canvas.getContext("2d");
 
@@ -7,8 +7,11 @@
 
   const xCenter = canvas.width / 2;
   const yCenter = canvas.height / 2;
-  const startButton = document.querySelector("#start");
   const score = document.querySelector("#score");
+  const upButton = document.querySelector("#btn-up");
+  const leftButton = document.querySelector("#btn-left");
+  const rightButton = document.querySelector("#btn-right");
+  const downButton = document.querySelector("#btn-down");
 
   const DIRECTION = {
     RIGHT: "RIGHT",
@@ -55,17 +58,40 @@
     }
   });
 
-  startButton.addEventListener("click", e => {
-    e.preventDefault();
+  canvas.addEventListener('click',  () => {
     score.childNodes[1].innerText = game.score;
     if (!game.on) {
       app.runGame();
+    }
+  })
+
+  leftButton.addEventListener("click", () => {
+    if (game.on && snake.direction !== DIRECTION.RIGHT) {
+      snake.direction = DIRECTION.LEFT;
+    }
+  });
+
+  rightButton.addEventListener("click", () => {
+    if (game.on && snake.direction !== DIRECTION.LEFT) {
+      snake.direction = DIRECTION.RIGHT;
+    }
+  });
+
+  upButton.addEventListener("click", () => {
+    if (game.on && snake.direction !== DIRECTION.DOWN) {
+      snake.direction = DIRECTION.UP;
+    }
+  });
+
+  downButton.addEventListener("click", () => {
+    if (game.on && snake.direction !== DIRECTION.UP) {
+      snake.direction = DIRECTION.DOWN;
     }
   });
 
   const app = {
     init: function() {
-      this.showText("Click Start button to begin");
+      this.showText("CLICK HERE TO START GAME");
       this.createNewSnake();
     },
 
@@ -78,12 +104,12 @@
     },
 
     showText: function(message) {
-      ctx.font = "20px monospace";
+      ctx.font = "1.5rem 'VT323'";
       ctx.fillStyle = "#000";
       ctx.textAlign = "center";
       ctx.fillText(message, xCenter, yCenter);
     },
-    
+
     createNewSnake: function() {
       snake.body.length = 0;
       for (let i = 0; i < 5; i++) {
@@ -222,7 +248,7 @@
 
     endGame: function() {
       clearInterval(game.action);
-      this.showText("Game Over");
+      this.showText("GAME OVER");
       this.resetGame();
     },
 
@@ -233,4 +259,4 @@
   };
 
   app.init();
-})();
+};
