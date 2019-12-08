@@ -234,8 +234,3 @@
 
   app.init();
 })();
-
-// window.onload = () => {
-
-//   app.init();
-// };
