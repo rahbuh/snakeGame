@@ -1,9 +1,17 @@
 window.onload = function() {
   const canvas = document.querySelector("canvas");
   const ctx = canvas.getContext("2d");
+  let offset;
 
-  canvas.width = 480;
-  canvas.height = 320;
+  if (window.innerWidth <= 480) {
+    canvas.width = 360;
+    canvas.height = 280;
+    offset = 2;
+  } else {
+    canvas.width = 480;
+    canvas.height = 320;
+    offset = 0;
+  }
 
   const xCenter = canvas.width / 2;
   const yCenter = canvas.height / 2;
@@ -22,7 +30,7 @@ window.onload = function() {
 
   const snake = {
     body: [],
-    segmentSize: 8,
+    segmentSize: 8 + offset,
     color: "#000",
     direction: "UP",
     addSegment: false
@@ -31,7 +39,7 @@ window.onload = function() {
   const apple = {
     x: 0,
     y: 0,
-    size: 8,
+    size: 8 + offset,
     color: "#000",
     eaten: true
   };
@@ -58,12 +66,12 @@ window.onload = function() {
     }
   });
 
-  canvas.addEventListener('click',  () => {
+  canvas.addEventListener("click", () => {
     score.childNodes[1].innerText = game.score;
     if (!game.on) {
       app.runGame();
     }
-  })
+  });
 
   leftButton.addEventListener("click", () => {
     if (game.on && snake.direction !== DIRECTION.RIGHT) {
