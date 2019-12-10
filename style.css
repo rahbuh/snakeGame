@@ -18,14 +18,14 @@ canvas {
 }
 
 .container {
-  width: 390px;
-  margin: 20px auto 0;
+  width: 380px;
+  margin: 10px auto 0;
 }
 
 #board {
   background-color: #9ab286;
   border-radius: 4px;
-  padding: 14px 14px 8px;
+  padding: 8px 8px 6px;
 }
 
 #stats {

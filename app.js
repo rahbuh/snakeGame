@@ -112,7 +112,7 @@ window.onload = function() {
     },
 
     showText: function(message) {
-      ctx.font = "1.5rem 'VT323'";
+      ctx.font = "24px 'VT323'";
       ctx.fillStyle = "#000";
       ctx.textAlign = "center";
       ctx.fillText(message, xCenter, yCenter);
