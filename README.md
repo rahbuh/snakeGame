@@ -1,4 +1,4 @@
-# Snake Game
+# Retro Snake Game
 
 ![Snake Game Demo](readme-images/snakegame.gif)
 
