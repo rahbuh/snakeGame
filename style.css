@@ -18,7 +18,7 @@ canvas {
 }
 
 .container {
-  width: 380px;
+  width: 340px;
   margin: 10px auto 0;
 }
 
@@ -88,9 +88,22 @@ canvas {
   grid-column: 2;
 }
 
-.panel {
+.panel,
+#speed-control {
   background-color: #333333;
   padding: 10px;
+}
+
+#speed-control {
+  text-align: center;
+  font-family: "Roboto Mono", monospace;
+  font-size: 0.8rem;
+  color: #fff;
+  margin-top: 5px;
+}
+
+#speed-control input {
+  margin: 0 5px 0 20px;
 }
 
 .instruction {
@@ -100,39 +113,4 @@ canvas {
   line-height: 1.25rem;
   color: #fff;
   padding: 0;
-}
-
-@media only screen and (min-width: 480px) {
-  #title {
-    font-size: 2.5rem;
-    margin: 10px 0 0;
-  }
-
-  .container {
-    width: 510px;
-    margin: 20px auto 0;
-  }
-
-  #board {
-    padding: 14px 14px 8px;
-  }
-
-  #score,
-  #level {
-    font-size: 1.5rem;
-  }
-
-  .controls-wrapper {
-    margin: 10px 0;
-    padding: 10px 0;
-  }
-
-  .panel {
-    padding: 20px;
-  }
-
-  .instruction {
-    font-size: 0.8rem;
-    line-height: 1.5rem;
-  }
 }

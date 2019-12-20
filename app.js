@@ -1,25 +1,19 @@
 window.onload = function() {
   const canvas = document.querySelector("canvas");
   const ctx = canvas.getContext("2d");
-  let offset;
 
-  if (window.innerWidth <= 480) {
-    canvas.width = 360;
-    canvas.height = 280;
-    offset = 2;
-  } else {
-    canvas.width = 480;
-    canvas.height = 320;
-    offset = 0;
-  }
+  canvas.width = 320;
+  canvas.height = 280;
 
   const xCenter = canvas.width / 2;
   const yCenter = canvas.height / 2;
   const score = document.querySelector("#score");
+  const level = document.querySelector("#level");
   const upButton = document.querySelector("#btn-up");
   const leftButton = document.querySelector("#btn-left");
   const rightButton = document.querySelector("#btn-right");
   const downButton = document.querySelector("#btn-down");
+  const speedControls = document.getElementsByName("speed");
 
   const DIRECTION = {
     RIGHT: "RIGHT",
@@ -30,7 +24,7 @@ window.onload = function() {
 
   const snake = {
     body: [],
-    segmentSize: 8 + offset,
+    segmentSize: 10,
     color: "#000",
     direction: "UP",
     addSegment: false
@@ -39,7 +33,7 @@ window.onload = function() {
   const apple = {
     x: 0,
     y: 0,
-    size: 8 + offset,
+    size: 10,
     color: "#000",
     eaten: true
   };
@@ -47,7 +41,7 @@ window.onload = function() {
   const game = {
     on: false,
     score: 0,
-    speed: 130,
+    speed: 180,
     action: null
   };
 
@@ -95,6 +89,12 @@ window.onload = function() {
     if (game.on && snake.direction !== DIRECTION.UP) {
       snake.direction = DIRECTION.DOWN;
     }
+  });
+
+  speedControls.forEach(node => {
+    node.addEventListener("click", e => {
+      app.setSpeed(e.target.value);
+    });
   });
 
   const app = {
@@ -161,6 +161,27 @@ window.onload = function() {
           snake.color
         );
       });
+    },
+
+    setSpeed: function(speed) {
+      switch (speed) {
+        case "slow":
+          game.speed = 180;
+          level.innerText = "LEVEL: SLOW";
+          break;
+        case "medium":
+          game.speed = 120;
+          level.innerText = "LEVEL: MED";
+          break;
+        case "fast":
+          game.speed = 80;
+          level.innerText = "LEVEL: FAST";
+          break;
+        default:
+          game.speed = 180;
+          level.innerText = "LEVEL: SLOW";
+          break;
+      }
     },
 
     moveSnake: function() {

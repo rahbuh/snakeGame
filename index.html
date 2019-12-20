@@ -28,6 +28,11 @@
           <p id="level">level: <span>slow</span></p>
         </div>
       </div>
+      <div id="speed-control">
+        <input type="radio" name="speed" id="speed" value="slow" checked />SLOW
+        <input type="radio" name="speed" id="speed" value="medium" />MED
+        <input type="radio" name="speed" id="speed" value="fast" />FAST
+      </div>
       <div class="controls-wrapper">
         <button id="btn-up" class="control">&#8593;</button>
         <button id="btn-left" class="control">&#8592;</button>
@@ -38,10 +43,11 @@
         <p id="title">Snake Game</p>
         <div>
           <ul class="instruction">
-            <li>Use the arrow keys to change the snake's direction</li>
+            <li>Use arrow keys to change snake's direction</li>
             <li>Each apple is worth 1 point</li>
             <li>Snake grows by eating apples</li>
-            <li>Game ends if snake touches the outer wall or itself</li>
+            <li>Game ends if snake touches outer wall or self</li>
+            <li>Touch or click screen to start/re-start game</li>
           </ul>
         </div>
       </div>
