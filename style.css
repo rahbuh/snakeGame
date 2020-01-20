@@ -50,8 +50,7 @@ canvas {
   justify-items: center;
   align-items: center;
   background-color: #f5f5f5;
-  margin: 8px 0;
-  padding: 10px 0;
+  margin: 5px 0;
 }
 
 .control {
@@ -88,10 +87,18 @@ canvas {
   grid-column: 2;
 }
 
+.panel {
+  margin-bottom: 2px;
+  padding: 2px 10px;
+}
+
+#speed-control {
+  padding: 10px;
+}
+
 .panel,
 #speed-control {
   background-color: #333333;
-  padding: 10px;
 }
 
 #speed-control {

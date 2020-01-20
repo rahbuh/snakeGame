@@ -22,6 +22,8 @@ window.onload = function() {
     DOWN: "DOWN"
   };
 
+  //comment
+
   const snake = {
     body: [],
     segmentSize: 10,
