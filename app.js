@@ -14,6 +14,8 @@ window.onload = function() {
   const rightButton = document.querySelector("#btn-right");
   const downButton = document.querySelector("#btn-down");
   const speedControls = document.getElementsByName("speed");
+  const openInfo = document.getElementById("open-info");
+  const closeInfo = document.getElementById("close-info");
 
   const DIRECTION = {
     RIGHT: "RIGHT",
@@ -21,8 +23,6 @@ window.onload = function() {
     UP: "UP",
     DOWN: "DOWN"
   };
-
-  //comment
 
   const snake = {
     body: [],
@@ -46,6 +46,16 @@ window.onload = function() {
     speed: 180,
     action: null
   };
+
+  openInfo.addEventListener("click", e => {
+    document.getElementById("instructions").style.display = "grid";
+    document.getElementById("board").style.display = "none";
+  });
+
+  closeInfo.addEventListener("click", e => {
+    document.getElementById("instructions").style.display = "none";
+    document.getElementById("board").style.display = "block";
+  });
 
   document.addEventListener("keydown", e => {
     if (e.key === "ArrowLeft" && snake.direction !== DIRECTION.RIGHT) {
@@ -101,6 +111,9 @@ window.onload = function() {
 
   const app = {
     init: function() {
+      document.querySelectorAll('[type = "radio"]').forEach(radio => {
+        radio.checked = false;
+      });
       this.showText("CLICK HERE TO START GAME");
       this.createNewSnake();
     },

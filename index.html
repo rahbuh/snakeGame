@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Snake Game App</title>
+    <script
+      src="https://kit.fontawesome.com/2de9944025.js"
+      crossorigin="anonymous"
+    ></script>
     <link
       href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
       rel="stylesheet"
@@ -21,7 +25,10 @@
   </head>
   <body>
     <div class="container">
-      <div class="panel"><p id="title">Snake Game</p></div>
+      <div class="panel">
+        <p id="title">Snake Game</p>
+        <i id="open-info" class="far fa-question-circle"></i>
+      </div>
 
       <div id="board">
         <canvas>Sorry, your browser does not support HTML5 Canvas.</canvas>
@@ -30,27 +37,33 @@
           <p id="level">level: <span>slow</span></p>
         </div>
       </div>
+
+      <div id="instructions">
+        <p id="instruction-title">INSTRUCTIONS</p>
+        <ul>
+          <li>- Use arrow keys to change snake's direction</li>
+          <li>- Each apple is worth 1 point</li>
+          <li>- Snake grows by eating apples</li>
+          <li>- Game ends if snake touches outer wall or self</li>
+          <li>- Touch or click screen to start/re-start game</li>
+        </ul>
+        <div id="close-instructions">
+          <i id="close-info" class="far fa-times-circle"></i>
+        </div>
+      </div>
       <div id="speed-control">
-        <input type="radio" name="speed" id="speed" value="slow" checked />SLOW
-        <input type="radio" name="speed" id="speed" value="medium" />MED
-        <input type="radio" name="speed" id="speed" value="fast" />FAST
+        <input type="radio" name="speed" id="slow" value="slow" checked />
+        <label for="slow">SLOW</label>
+        <input type="radio" name="speed" id="medium" value="medium" />
+        <label for="medium">MED</label>
+        <input type="radio" name="speed" id="fast" value="fast" />
+        <label for="fast">FAST</label>
       </div>
       <div class="controls-wrapper">
         <button id="btn-up" class="control">&#8593;</button>
         <button id="btn-left" class="control">&#8592;</button>
         <button id="btn-right" class="control">&#8594;</button>
         <button id="btn-down" class="control">&#8595;</button>
-      </div>
-      <div class="panel">
-        <div>
-          <ul class="instruction">
-            <li>Use arrow keys to change snake's direction</li>
-            <li>Each apple is worth 1 point</li>
-            <li>Snake grows by eating apples</li>
-            <li>Game ends if snake touches outer wall or self</li>
-            <li>Touch or click screen to start/re-start game</li>
-          </ul>
-        </div>
       </div>
     </div>
     <script src="./app.js"></script>
