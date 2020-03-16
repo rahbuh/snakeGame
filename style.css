@@ -152,3 +152,18 @@ canvas {
   color: #fff;
   padding: 0;
 }
+
+@media (max-width: 340px) {
+  .container {
+    margin: 0 auto;
+  }
+  .panel {
+    margin-bottom: 1px;
+  }
+  #speed-control {
+    margin-top: 1px;
+  }
+  .controls-wrapper {
+    margin: 1px 0;
+  }
+}
