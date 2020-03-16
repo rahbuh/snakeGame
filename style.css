@@ -168,7 +168,7 @@ canvas {
   }
 } */
 
-@media only screen and (max-device-width: 340px) and (-webkit-min-device-pixel-ratio: 2) {
+@media screen and (max-width: 420px) {
   .container {
     margin: 0 auto;
   }
