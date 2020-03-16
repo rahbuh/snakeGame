@@ -26,7 +26,7 @@ canvas {
 
 .container {
   width: 340px;
-  margin: 0 auto;
+  margin: 1rem auto;
 }
 
 #board {
