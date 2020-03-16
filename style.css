@@ -39,7 +39,6 @@ canvas {
   grid-template-rows: 30px 180px 98px;
   background-color: #9ab286;
   font-family: "Montserrat", sans-serif;
-  color: #333;
   padding-top: 16px;
   display: none;
 }
