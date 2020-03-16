@@ -153,7 +153,22 @@ canvas {
   padding: 0;
 }
 
-@media (max-width: 340px) {
+/* @media (max-width: 340px) {
+  .container {
+    margin: 0 auto;
+  }
+  .panel {
+    margin-bottom: 1px;
+  }
+  #speed-control {
+    margin-top: 1px;
+  }
+  .controls-wrapper {
+    margin: 1px 0;
+  }
+} */
+
+@media only screen and (max-device-width: 340px) and (-webkit-min-device-pixel-ratio: 2) {
   .container {
     margin: 0 auto;
   }
