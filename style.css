@@ -78,9 +78,7 @@ canvas {
 
 .controls-wrapper {
   display: grid;
-  grid-template-columns: repeat(5, 60px);
-  /* grid-template-rows: repeat(3, 60px); */
-
+  grid-template-columns: repeat(4, 80px);
   justify-content: center;
   justify-items: center;
   align-items: center;
@@ -96,17 +94,22 @@ canvas {
   border-left: 2px solid #999;
   border-top: 2px solid #999;
   border-radius: 5px;
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   font-size: 1.5rem;
   color: #fff;
   padding: 8px;
   -webkit-appearance: none;
   -moz-appearance: none;
+  user-select: none; /* supported by Chrome and Opera */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
 }
 
 #btn-up {
-  grid-column-start: 2;
+  grid-column-start: 3;
   grid-row-start: 1;
 }
 
@@ -115,7 +118,7 @@ canvas {
 }
 
 #btn-right {
-  grid-column: 5;
+  grid-column: 2;
 }
 
 #btn-down {
@@ -144,3 +147,4 @@ canvas {
   margin-top: 1px;
   padding: 10px 0;
 }
+
