@@ -36,11 +36,15 @@ canvas {
 }
 
 #instructions {
-  grid-template-rows: 30px 180px 98px;
+  grid-template-rows: 46px 180px 94px;
   background-color: #9ab286;
   font-family: "Montserrat", sans-serif;
-  padding-top: 16px;
   display: none;
+}
+
+#instruction-title {
+  text-align: center;
+  padding-top: 1rem;
 }
 
 #instructions ul {
@@ -48,18 +52,14 @@ canvas {
   font-size: 0.8rem;
   line-height: 1.25rem;
   margin: 0;
-  padding: 8px 16px;
-}
-
-#instruction-title {
-  text-align: center;
+  padding: 0.5rem 1rem;
 }
 
 #close-instructions {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  padding: 0 32px;
+  padding: 0 2rem;
 }
 
 #stats {
@@ -78,8 +78,9 @@ canvas {
 
 .controls-wrapper {
   display: grid;
-  grid-template-columns: repeat(3, 60px);
-  grid-template-rows: repeat(3, 60px);
+  grid-template-columns: repeat(5, 60px);
+  /* grid-template-rows: repeat(3, 60px); */
+
   justify-content: center;
   justify-items: center;
   align-items: center;
@@ -105,21 +106,21 @@ canvas {
 }
 
 #btn-up {
-  grid-column: 2;
+  grid-column-start: 2;
+  grid-row-start: 1;
 }
 
 #btn-left {
-  grid-row: 2;
+  grid-column-start: 1;
 }
 
 #btn-right {
-  grid-row: 2;
-  grid-column: 3;
+  grid-column: 5;
 }
 
 #btn-down {
-  grid-row: 3;
-  grid-column: 2;
+  grid-column: 4;
+  grid-row-start: 1;
 }
 
 .far {
@@ -142,13 +143,4 @@ canvas {
   color: #fff;
   margin-top: 1px;
   padding: 10px 0;
-}
-
-.instruction {
-  list-style: none;
-  font-family: "Roboto Mono", monospace;
-  font-size: 0.7rem;
-  line-height: 1.25rem;
-  color: #fff;
-  padding: 0;
 }
