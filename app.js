@@ -1,4 +1,4 @@
-window.onload = function() {
+window.onload = function () {
   const canvas = document.querySelector("canvas");
   const ctx = canvas.getContext("2d");
 
@@ -21,7 +21,7 @@ window.onload = function() {
     RIGHT: "RIGHT",
     LEFT: "LEFT",
     UP: "UP",
-    DOWN: "DOWN"
+    DOWN: "DOWN",
   };
 
   const snake = {
@@ -29,7 +29,7 @@ window.onload = function() {
     segmentSize: 10,
     color: "#000",
     direction: "UP",
-    addSegment: false
+    addSegment: false,
   };
 
   const apple = {
@@ -37,27 +37,27 @@ window.onload = function() {
     y: 0,
     size: 10,
     color: "#000",
-    eaten: true
+    eaten: true,
   };
 
   const game = {
     on: false,
     score: 0,
     speed: 180,
-    action: null
+    action: null,
   };
 
-  openInfo.addEventListener("click", e => {
+  openInfo.addEventListener("click", (e) => {
     document.getElementById("instructions").style.display = "grid";
     document.getElementById("board").style.display = "none";
   });
 
-  closeInfo.addEventListener("click", e => {
+  closeInfo.addEventListener("click", (e) => {
     document.getElementById("instructions").style.display = "none";
     document.getElementById("board").style.display = "block";
   });
 
-  document.addEventListener("keydown", e => {
+  document.addEventListener("keydown", (e) => {
     if (e.key === "ArrowLeft" && snake.direction !== DIRECTION.RIGHT) {
       snake.direction = DIRECTION.LEFT;
     }
@@ -74,9 +74,7 @@ window.onload = function() {
 
   canvas.addEventListener("click", () => {
     score.childNodes[1].innerText = game.score;
-    if (!game.on) {
-      app.runGame();
-    }
+    !game.on && app.runGame();
   });
 
   leftButton.addEventListener("click", () => {
@@ -103,22 +101,22 @@ window.onload = function() {
     }
   });
 
-  speedControls.forEach(node => {
-    node.addEventListener("click", e => {
+  speedControls.forEach((node) => {
+    node.addEventListener("click", (e) => {
       app.setSpeed(e.target.value);
     });
   });
 
   const app = {
-    init: function() {
-      document.querySelectorAll('[type = "radio"]').forEach(radio => {
+    init: function () {
+      document.querySelectorAll('[type = "radio"]').forEach((radio) => {
         radio.checked = false;
       });
       this.showText("CLICK HERE TO START GAME");
       this.createNewSnake();
     },
 
-    resetGame: function() {
+    resetGame: function () {
       game.on = !game.on;
       game.score = 0;
       apple.eaten = !apple.eaten;
@@ -126,28 +124,28 @@ window.onload = function() {
       this.createNewSnake();
     },
 
-    showText: function(message) {
+    showText: function (message) {
       ctx.font = "24px 'VT323'";
       ctx.fillStyle = "#000";
       ctx.textAlign = "center";
       ctx.fillText(message, xCenter, yCenter);
     },
 
-    createNewSnake: function() {
+    createNewSnake: function () {
       snake.body.length = 0;
       for (let i = 0; i < 5; i++) {
         snake.body.push({ x: xCenter, y: yCenter + snake.segmentSize * i });
       }
     },
 
-    drawRect: function(x, y, width, height, color) {
+    drawRect: function (x, y, width, height, color) {
       ctx.beginPath();
       ctx.fillStyle = color;
       ctx.fillRect(x, y, width, height);
       ctx.closePath();
     },
 
-    randomLocation: function(measure) {
+    randomLocation: function (measure) {
       return (
         Math.round(
           Math.floor(Math.random() * (measure - apple.size)) / apple.size
@@ -155,19 +153,19 @@ window.onload = function() {
       );
     },
 
-    setNewAppleCoordinates: function() {
+    setNewAppleCoordinates: function () {
       apple.x = this.randomLocation(canvas.width);
       apple.y = this.randomLocation(canvas.height);
     },
 
-    createNewApple: function() {
+    createNewApple: function () {
       this.setNewAppleCoordinates();
       this.drawRect(apple.x, apple.y, apple.size, apple.size, apple.color);
       apple.eaten = !apple.eaten;
     },
 
-    drawSnake: function() {
-      snake.body.forEach(section => {
+    drawSnake: function () {
+      snake.body.forEach((section) => {
         this.drawRect(
           section.x,
           section.y,
@@ -178,7 +176,7 @@ window.onload = function() {
       });
     },
 
-    setSpeed: function(speed) {
+    setSpeed: function (speed) {
       switch (speed) {
         case "slow":
           game.speed = 180;
@@ -199,7 +197,7 @@ window.onload = function() {
       }
     },
 
-    moveSnake: function() {
+    moveSnake: function () {
       let nextX = snake.body[0].x;
       let nextY = snake.body[0].y;
 
@@ -238,7 +236,7 @@ window.onload = function() {
       this.detectSnakeCollisionWithSelf();
     },
 
-    detectEdgeCollision: function() {
+    detectEdgeCollision: function () {
       const isTouchingRightOrLeftEdge =
         snake.body[0].x > canvas.width - snake.segmentSize ||
         snake.body[0].x < 0;
@@ -247,12 +245,11 @@ window.onload = function() {
         snake.body[0].y > canvas.height - snake.segmentSize ||
         snake.body[0].y < 0;
 
-      if (isTouchingRightOrLeftEdge || isTouchingTopOrBottomEdge) {
+      (isTouchingRightOrLeftEdge || isTouchingTopOrBottomEdge) &&
         this.endGame();
-      }
     },
 
-    detectAppleEaten: function() {
+    detectAppleEaten: function () {
       const isAppleEaten =
         snake.body[0].x < apple.x + apple.size &&
         snake.body[0].x + snake.segmentSize > apple.x &&
@@ -266,40 +263,35 @@ window.onload = function() {
       }
     },
 
-    detectSnakeCollisionWithSelf: function() {
+    detectSnakeCollisionWithSelf: function () {
       for (let i = 1; i < snake.body.length; i++) {
-        if (
-          snake.body[0].x === snake.body[i].x &&
-          snake.body[0].y === snake.body[i].y
-        ) {
+        snake.body[0].x === snake.body[i].x &&
+          snake.body[0].y === snake.body[i].y &&
           this.endGame();
-        }
       }
     },
 
-    runGame: function() {
+    runGame: function () {
       game.on = !game.on;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       this.drawSnake();
       game.action = setInterval(() => {
-        if (apple.eaten) {
-          this.createNewApple();
-        }
+        apple.eaten && this.createNewApple();
         this.moveSnake();
         this.drawRect(apple.x, apple.y, apple.size, apple.size, apple.color);
       }, game.speed);
     },
 
-    endGame: function() {
+    endGame: function () {
       clearInterval(game.action);
       this.showText("GAME OVER");
       this.resetGame();
     },
 
-    updateScore: function() {
+    updateScore: function () {
       game.score += 1;
       score.childNodes[1].innerText = game.score;
-    }
+    },
   };
 
   app.init();
