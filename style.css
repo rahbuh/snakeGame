@@ -39,10 +39,16 @@ canvas {
   padding: 8px 8px 6px;
 }
 
+#instructions,
+#instructions ul {
+  font-family: "VT323", monospace;
+  text-transform: uppercase;
+}
+
 #instructions {
   grid-template-rows: 46px 180px 94px;
   background-color: #9ab286;
-  font-family: "Montserrat", sans-serif;
+  font-size: 1.5rem;
   display: none;
 }
 
@@ -53,10 +59,10 @@ canvas {
 
 #instructions ul {
   list-style: none;
-  font-size: 0.8rem;
-  line-height: 1.25rem;
+  font-size: 1.1rem;
+  line-height: 1.5rem;
   margin: 0;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem .5rem;
 }
 
 #close-instructions {
