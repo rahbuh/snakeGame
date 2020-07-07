@@ -102,16 +102,13 @@ window.onload = () => {
   });
 
   speedControls.forEach((node) => {
-    node.addEventListener("click", (e) => {
+    node.addEventListener("change", (e) => {
       app.setSpeed(e.target.value);
     });
   });
 
   const app = {
     init: function () {
-      document.querySelectorAll('[type = "radio"]').forEach((radio) => {
-        radio.checked = false;
-      });
       this.showText("CLICK HERE TO START GAME");
       this.createNewSnake();
     },
@@ -273,6 +270,7 @@ window.onload = () => {
 
     runGame: function () {
       game.on = !game.on;
+      this.disableSpeedControls(true);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       this.drawSnake();
       game.action = setInterval(() => {
@@ -282,9 +280,18 @@ window.onload = () => {
       }, game.speed);
     },
 
+    disableSpeedControls: function (status) {
+      const radioNodes = document.querySelectorAll('[type = "radio"]');
+
+      status
+        ? radioNodes.forEach((radio) => radio.setAttribute("disabled", true))
+        : radioNodes.forEach((radio) => radio.removeAttribute("disabled"));
+    },
+
     endGame: function () {
       clearInterval(game.action);
       this.showText("GAME OVER");
+      this.disableSpeedControls(false);
       this.resetGame();
     },
 

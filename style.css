@@ -151,3 +151,28 @@ canvas {
   margin-top: 1px;
   padding: 10px 0;
 }
+
+@media only screen and (min-width: 480px) {
+  .controls-wrapper {
+    grid-template-columns: repeat(5, 70px);
+    grid-template-rows: repeat(3, 70px);
+  }
+
+  #btn-up {
+    grid-column: 3;
+    grid-row: 1;
+  }
+
+  #btn-left,
+  #btn-right {
+    grid-row: 2;
+  }
+
+  #btn-left {
+    grid-column: 2;
+  }
+
+  #btn-down {
+    grid-row: 3;
+  }
+}
