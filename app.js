@@ -1,4 +1,4 @@
-window.onload = function () {
+window.onload = () => {
   const canvas = document.querySelector("canvas");
   const ctx = canvas.getContext("2d");
 
@@ -125,7 +125,7 @@ window.onload = function () {
     },
 
     showText: function (message) {
-      ctx.font = "24px 'VT323'";
+      ctx.font = "24px VT323";
       ctx.fillStyle = "#000";
       ctx.textAlign = "center";
       ctx.fillText(message, xCenter, yCenter);

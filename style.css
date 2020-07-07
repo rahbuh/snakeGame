@@ -7,7 +7,7 @@
 canvas {
   background-color: #9ab286;
   border: 1px solid #000;
-  font-family: "VT323", monospace;
+  /* font-family: "VT323", monospace; */
 }
 
 #title {
