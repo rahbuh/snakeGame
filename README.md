@@ -1,6 +1,5 @@
 # Retro Snake Game
 
-You can see it in action [here](https://robkramer.dev/snake_game/)
 
 ![Snake Game Demo](readme-images/snakegame.gif)
 
