@@ -83,6 +83,7 @@ canvas {
   justify-self: center;
   background-color: Transparent;
   border: none;
+  cursor: pointer;
 }
 
 #btn-up,
