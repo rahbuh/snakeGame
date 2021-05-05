@@ -1,4 +1,7 @@
 window.onload = () => {
+  let displayInstruction = false;
+  let gamePaused = false;
+
   const canvas = document.querySelector("canvas");
   const ctx = canvas.getContext("2d");
 
@@ -9,18 +12,16 @@ window.onload = () => {
 
   const score = document.querySelector("#score");
   const level = document.querySelector("#level");
+
   const upButton = document.querySelector("#btn-up");
   const leftButton = document.querySelector("#btn-left");
   const rightButton = document.querySelector("#btn-right");
   const downButton = document.querySelector("#btn-down");
   const start = document.querySelector("#btn-start");
+  const pause = document.querySelector("#btn-pause");
   const info = document.querySelector("#btn-info");
   const speed = document.querySelector("#btn-speed");
   
-  // const speedControls = document.getElementsByName("speed");
-  // const openInfo = document.getElementById("open-info");
-  // const closeInfo = document.getElementById("close-info");
-
   const DIRECTION = {
     RIGHT: "RIGHT",
     LEFT: "LEFT",
@@ -51,15 +52,19 @@ window.onload = () => {
     action: null,
   };
 
-  // openInfo.addEventListener("click", (e) => {
-  //   document.getElementById("instructions").style.display = "grid";
-  //   document.getElementById("board").style.display = "none";
-  // });
+  info.addEventListener("click", () => {
+      const board = document.querySelector("#board")
+      const instruction = document.querySelector("#instructions")
+      displayInstruction = !displayInstruction;
 
-  // closeInfo.addEventListener("click", (e) => {
-  //   document.getElementById("instructions").style.display = "none";
-  //   document.getElementById("board").style.display = "block";
-  // });
+      if(displayInstruction) {
+        instruction.style.display = "block"
+        board.style.display = "none"
+      } else {
+        instruction.style.display = "none"
+        board.style.display = "block"
+      }
+  });
 
   document.addEventListener("keydown", (e) => {
     if (e.key === "ArrowLeft" && snake.direction !== DIRECTION.RIGHT) {
@@ -86,6 +91,18 @@ window.onload = () => {
   start.addEventListener("click", () => {
     score.childNodes[1].innerText = game.score;
     !game.on && app.runGame();
+  });
+
+  pause.addEventListener("click", () => {
+    gamePaused = !gamePaused;
+    
+    if (gamePaused) {
+      app.pause()
+    } else {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+    console.log(gamePaused)
+    console.log(game.action);
   });
 
   leftButton.addEventListener("click", () => {
@@ -117,12 +134,12 @@ window.onload = () => {
   });
 
   const app = {
-    init: function () {
+    init() {
       this.showText("PRESS # TO START GAME");
       this.createNewSnake();
     },
 
-    resetGame: function () {
+    resetGame() {
       game.on = !game.on;
       game.score = 0;
       apple.eaten = !apple.eaten;
@@ -130,28 +147,28 @@ window.onload = () => {
       this.createNewSnake();
     },
 
-    showText: function (message) {
+    showText(message) {
       ctx.font = "24px VT323";
       ctx.fillStyle = "#000";
       ctx.textAlign = "center";
       ctx.fillText(message, xCenter, yCenter);
     },
 
-    createNewSnake: function () {
+    createNewSnake() {
       snake.body.length = 0;
       for (let i = 0; i < 5; i++) {
         snake.body.push({ x: xCenter, y: yCenter + snake.segmentSize * i });
       }
     },
 
-    drawRect: function (x, y, width, height, color) {
+    drawRect(x, y, width, height, color) {
       ctx.beginPath();
       ctx.fillStyle = color;
       ctx.fillRect(x, y, width, height);
       ctx.closePath();
     },
 
-    randomLocation: function (measure) {
+    randomLocation(measure) {
       return (
         Math.round(
           Math.floor(Math.random() * (measure - apple.size)) / apple.size
@@ -159,18 +176,18 @@ window.onload = () => {
       );
     },
 
-    setNewAppleCoordinates: function () {
+    setNewAppleCoordinates() {
       apple.x = this.randomLocation(canvas.width);
       apple.y = this.randomLocation(canvas.height);
     },
 
-    createNewApple: function () {
+    createNewApple() {
       this.setNewAppleCoordinates();
       this.drawRect(apple.x, apple.y, apple.size, apple.size, apple.color);
       apple.eaten = !apple.eaten;
     },
 
-    drawSnake: function () {
+    drawSnake() {
       snake.body.forEach((section) => {
         this.drawRect(
           section.x,
@@ -182,7 +199,7 @@ window.onload = () => {
       });
     },
 
-    setSpeed (text) {
+    setSpeed(text) {
       switch (text) {
         case "LEVEL: SLOW":
           level.innerText = "LEVEL: MED";
@@ -199,7 +216,7 @@ window.onload = () => {
       }
     },
 
-    moveSnake: function () {
+    moveSnake() {
       let nextX = snake.body[0].x;
       let nextY = snake.body[0].y;
 
@@ -238,7 +255,7 @@ window.onload = () => {
       this.detectSnakeCollisionWithSelf();
     },
 
-    detectEdgeCollision: function () {
+    detectEdgeCollision() {
       const isTouchingRightOrLeftEdge =
         snake.body[0].x > canvas.width - snake.segmentSize ||
         snake.body[0].x < 0;
@@ -251,7 +268,7 @@ window.onload = () => {
         this.endGame();
     },
 
-    detectAppleEaten: function () {
+    detectAppleEaten() {
       const isAppleEaten =
         snake.body[0].x < apple.x + apple.size &&
         snake.body[0].x + snake.segmentSize > apple.x &&
@@ -265,7 +282,7 @@ window.onload = () => {
       }
     },
 
-    detectSnakeCollisionWithSelf: function () {
+    detectSnakeCollisionWithSelf() {
       for (let i = 1; i < snake.body.length; i++) {
         snake.body[0].x === snake.body[i].x &&
           snake.body[0].y === snake.body[i].y &&
@@ -273,34 +290,33 @@ window.onload = () => {
       }
     },
 
-    runGame: function () {
+    runGame() {
       game.on = !game.on;
-      this.disableSpeedControls(true);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       this.drawSnake();
-      game.action = setInterval(() => {
+      game.action = this.run();
+    },
+
+    run() {
+      return setInterval(() => {
         apple.eaten && this.createNewApple();
         this.moveSnake();
         this.drawRect(apple.x, apple.y, apple.size, apple.size, apple.color);
       }, game.speed);
     },
 
-    disableSpeedControls: function (status) {
-      const radioNodes = document.querySelectorAll('[type = "radio"]');
-
-      status
-        ? radioNodes.forEach((radio) => radio.setAttribute("disabled", true))
-        : radioNodes.forEach((radio) => radio.removeAttribute("disabled"));
+    pause() {
+      clearInterval(game.action);
+      this.showText("PAUSED");
     },
 
-    endGame: function () {
+    endGame() {
       clearInterval(game.action);
       this.showText("GAME OVER");
-      this.disableSpeedControls(false);
       this.resetGame();
     },
 
-    updateScore: function () {
+    updateScore() {
       game.score += 1;
       score.childNodes[1].innerText = game.score;
     },
