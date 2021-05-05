@@ -10,32 +10,32 @@
       crossorigin="anonymous"
     ></script>
 
-    <link
-      href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./assets/style.css" />
   </head>
   <body>
     <div class="container">
-      <div class="panel">
-        <p id="title">Snake Game</p>
-        <i id="open-info" class="far fa-question-circle"></i>
+      <div id="nokia-skin">
+          <div id="board">
+            <canvas>Sorry, your browser does not support HTML5 Canvas.</canvas>
+            <div id="stats">
+              <p id="score">score: <span>0</span></p>
+              <p id="level">level: <span>slow</span></p>
+            </div>
+          </div>
+          <div class="controls-wrapper">
+            <button id="btn-speed" class="control"></button>
+            <button id="btn-up" class="control"></button>
+            <button id="btn-left" class="control"></button>
+            <button id="btn-right" class="control"></button>
+            <button id="btn-down" class="control"></button>
+            <button id="btn-info" class="control"></button>
+            <button id="btn-pause" class="control"></button>
+            <button id="btn-start" class="control"></button>
+          </div> 
       </div>
+    </div>
 
-      <div id="board">
-        <canvas>Sorry, your browser does not support HTML5 Canvas.</canvas>
-        <div id="stats">
-          <p id="score">score: <span>0</span></p>
-          <p id="level">level: <span>slow</span></p>
-        </div>
-      </div>
-
-      <div id="instructions">
+      <!-- <div id="instructions">
         <p id="instruction-title">INSTRUCTIONS</p>
         <ul>
           <li>-Use arrow keys to change snake's direction</li>
@@ -47,22 +47,18 @@
         <div id="close-instructions">
           <i id="close-info" class="far fa-times-circle"></i>
         </div>
-      </div>
-      <div id="speed-control">
+      </div> -->
+
+      <!-- <div id="speed-control">
         <input type="radio" name="speed" id="slow" value="slow" checked/>
         <label for="slow">SLOW</label>
         <input type="radio" name="speed" id="medium" value="medium" />
         <label for="medium">MED</label>
         <input type="radio" name="speed" id="fast" value="fast" />
         <label for="fast">FAST</label>
-      </div>
-      <div class="controls-wrapper">
-        <button id="btn-up" class="control">&#8593;</button>
-        <button id="btn-left" class="control">&#8592;</button>
-        <button id="btn-right" class="control">&#8594;</button>
-        <button id="btn-down" class="control">&#8595;</button>
-      </div>
-    </div>
-    <script src="./app.js"></script>
+      </div> -->
+
+   
+    <script src="./assets/app.js"></script>
   </body>
 </html>

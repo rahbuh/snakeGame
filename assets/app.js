@@ -2,20 +2,24 @@ window.onload = () => {
   const canvas = document.querySelector("canvas");
   const ctx = canvas.getContext("2d");
 
-  canvas.width = 320;
-  canvas.height = 280;
-
+  canvas.width = 288;
+  canvas.height = 192;
   const xCenter = canvas.width / 2;
   const yCenter = canvas.height / 2;
+
   const score = document.querySelector("#score");
   const level = document.querySelector("#level");
   const upButton = document.querySelector("#btn-up");
   const leftButton = document.querySelector("#btn-left");
   const rightButton = document.querySelector("#btn-right");
   const downButton = document.querySelector("#btn-down");
-  const speedControls = document.getElementsByName("speed");
-  const openInfo = document.getElementById("open-info");
-  const closeInfo = document.getElementById("close-info");
+  const start = document.querySelector("#btn-start");
+  const info = document.querySelector("#btn-info");
+  const speed = document.querySelector("#btn-speed");
+  
+  // const speedControls = document.getElementsByName("speed");
+  // const openInfo = document.getElementById("open-info");
+  // const closeInfo = document.getElementById("close-info");
 
   const DIRECTION = {
     RIGHT: "RIGHT",
@@ -26,7 +30,7 @@ window.onload = () => {
 
   const snake = {
     body: [],
-    segmentSize: 10,
+    segmentSize: 8,
     color: "#000",
     direction: "UP",
     addSegment: false,
@@ -35,7 +39,7 @@ window.onload = () => {
   const apple = {
     x: 0,
     y: 0,
-    size: 10,
+    size: 8,
     color: "#000",
     eaten: true,
   };
@@ -47,15 +51,15 @@ window.onload = () => {
     action: null,
   };
 
-  openInfo.addEventListener("click", (e) => {
-    document.getElementById("instructions").style.display = "grid";
-    document.getElementById("board").style.display = "none";
-  });
+  // openInfo.addEventListener("click", (e) => {
+  //   document.getElementById("instructions").style.display = "grid";
+  //   document.getElementById("board").style.display = "none";
+  // });
 
-  closeInfo.addEventListener("click", (e) => {
-    document.getElementById("instructions").style.display = "none";
-    document.getElementById("board").style.display = "block";
-  });
+  // closeInfo.addEventListener("click", (e) => {
+  //   document.getElementById("instructions").style.display = "none";
+  //   document.getElementById("board").style.display = "block";
+  // });
 
   document.addEventListener("keydown", (e) => {
     if (e.key === "ArrowLeft" && snake.direction !== DIRECTION.RIGHT) {
@@ -70,9 +74,16 @@ window.onload = () => {
     if (e.key === "ArrowDown" && snake.direction !== DIRECTION.UP) {
       snake.direction = DIRECTION.DOWN;
     }
+    if (e.key === "Enter") {
+      score.childNodes[1].innerText = game.score;
+      !game.on && app.runGame();111111
+    }
+    if (e.key === "1") {
+      app.setSpeed(level.innerText);
+    }
   });
 
-  canvas.addEventListener("click", () => {
+  start.addEventListener("click", () => {
     score.childNodes[1].innerText = game.score;
     !game.on && app.runGame();
   });
@@ -101,15 +112,13 @@ window.onload = () => {
     }
   });
 
-  speedControls.forEach((node) => {
-    node.addEventListener("change", (e) => {
-      app.setSpeed(e.target.value);
-    });
+  speed.addEventListener("click", () => {
+    app.setSpeed(level.innerText);
   });
 
   const app = {
     init: function () {
-      this.showText("CLICK HERE TO START GAME");
+      this.showText("PRESS # TO START GAME");
       this.createNewSnake();
     },
 
@@ -173,22 +182,18 @@ window.onload = () => {
       });
     },
 
-    setSpeed: function (speed) {
-      switch (speed) {
-        case "slow":
-          game.speed = 180;
-          level.innerText = "LEVEL: SLOW";
-          break;
-        case "medium":
-          game.speed = 120;
+    setSpeed (text) {
+      switch (text) {
+        case "LEVEL: SLOW":
           level.innerText = "LEVEL: MED";
           break;
-        case "fast":
-          game.speed = 80;
+        case "LEVEL: MED":
           level.innerText = "LEVEL: FAST";
           break;
+        case "LEVEL: FAST":
+          level.innerText = "LEVEL: SLOW";
+          break;
         default:
-          game.speed = 180;
           level.innerText = "LEVEL: SLOW";
           break;
       }

@@ -1,7 +1,7 @@
 # Retro Snake Game
 
 
-![Snake Game Demo](readme-images/snakegame.gif)
+![Snake Game Demo](readme-images/snakegame.png)
 
 The snake game is a simple game created in html (using canvas) and javascript. The objective is to guide the snake to the apples using the arrow keys on your keyboard. Each apple the snake 'eats' adds 1 point to the score and adds to the size of the snake.  
 
