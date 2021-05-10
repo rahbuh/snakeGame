@@ -21,7 +21,7 @@
 }
 
 #nokia-skin {
-  background-image: url("https://res.cloudinary.com/rahbuh/image/upload/v1620615401/nokia_shell_f0o5km.png");
+  background-image: url("../images/nokia_shell.png");
   background-repeat: no-repeat;
   background-size: contain;
   display: flex;
