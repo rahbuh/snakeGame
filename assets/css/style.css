@@ -14,13 +14,14 @@
 
 .container {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  width: 500px;
+  width: 600px;
   margin: 20px auto;
 }
 
 #nokia-skin {
-  background-image: url("../images/nokia_shell.png");
+  background-image: url("https://res.cloudinary.com/rahbuh/image/upload/v1620615401/nokia_shell_f0o5km.png");
   background-repeat: no-repeat;
   background-size: contain;
   display: flex;
@@ -53,6 +54,15 @@ canvas {
 #score,
 #level {
   margin: 0;
+}
+
+.info-text {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.5rem;
+  text-align: center;
+  text-transform: uppercase;
+  width: 100%;
+  margin: 10px 0;
 }
 
 #instructions {

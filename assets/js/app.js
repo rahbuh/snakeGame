@@ -52,6 +52,19 @@ window.onload = () => {
     action: null,
   };
 
+  function pauseOrRunGame() {
+    gamePaused = !gamePaused;
+    
+    if (game.on) {
+      if (gamePaused) {
+        app.pause()
+      } else {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        game.action = app.run();
+      }
+    }
+  }
+
   info.addEventListener("click", () => {
       const board = document.querySelector("#board")
       const instruction = document.querySelector("#instructions")
@@ -81,10 +94,13 @@ window.onload = () => {
     }
     if (e.key === "Enter") {
       score.childNodes[1].innerText = game.score;
-      !game.on && app.runGame();111111
+      !game.on && app.runGame();
     }
     if (e.key === "1") {
       app.setSpeed(level.innerText);
+    }
+    if (e.key === " ") {
+      pauseOrRunGame();
     }
   });
 
@@ -93,17 +109,7 @@ window.onload = () => {
     !game.on && app.runGame();
   });
 
-  pause.addEventListener("click", () => {
-    gamePaused = !gamePaused;
-    
-    if (gamePaused) {
-      app.pause()
-    } else {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-    }
-    console.log(gamePaused)
-    console.log(game.action);
-  });
+  pause.addEventListener("click", pauseOrRunGame);
 
   leftButton.addEventListener("click", () => {
     if (game.on && snake.direction !== DIRECTION.RIGHT) {
@@ -200,20 +206,25 @@ window.onload = () => {
     },
 
     setSpeed(text) {
+      if (!game.on) {
       switch (text) {
         case "LEVEL: SLOW":
           level.innerText = "LEVEL: MED";
+          game.speed = 100;
           break;
         case "LEVEL: MED":
           level.innerText = "LEVEL: FAST";
+          game.speed = 70;
           break;
         case "LEVEL: FAST":
           level.innerText = "LEVEL: SLOW";
+          game.speed = 180;
           break;
         default:
           level.innerText = "LEVEL: SLOW";
+          game.speed = 180;
           break;
-      }
+      }}
     },
 
     moveSnake() {
@@ -238,6 +249,7 @@ window.onload = () => {
       }
 
       snake.body.unshift({ x: nextX, y: nextY });
+
       if (!snake.addSegment) {
         let segmentToRemove = snake.body.pop();
         ctx.clearRect(
@@ -249,6 +261,7 @@ window.onload = () => {
       } else {
         snake.addSegment = !snake.addSegment;
       }
+
       this.drawSnake();
       this.detectAppleEaten();
       this.detectEdgeCollision();
